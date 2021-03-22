@@ -1,0 +1,15 @@
+C:\Users\carlo\source\repos\CompiPascalC3D\bin\Debug\netcoreapp3.1\CompiPascalC3D.exe
+C:\Users\carlo\source\repos\CompiPascalC3D\bin\Debug\netcoreapp3.1\CompiPascalC3D.deps.json
+C:\Users\carlo\source\repos\CompiPascalC3D\bin\Debug\netcoreapp3.1\CompiPascalC3D.runtimeconfig.json
+C:\Users\carlo\source\repos\CompiPascalC3D\bin\Debug\netcoreapp3.1\CompiPascalC3D.runtimeconfig.dev.json
+C:\Users\carlo\source\repos\CompiPascalC3D\bin\Debug\netcoreapp3.1\CompiPascalC3D.dll
+C:\Users\carlo\source\repos\CompiPascalC3D\bin\Debug\netcoreapp3.1\CompiPascalC3D.pdb
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.csprojAssemblyReference.cache
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.Form1.resources
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.csproj.GenerateResource.cache
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.AssemblyInfoInputs.cache
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.AssemblyInfo.cs
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.csproj.CoreCompileInputs.cache
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.dll
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.pdb
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.genruntimeconfig.cache
