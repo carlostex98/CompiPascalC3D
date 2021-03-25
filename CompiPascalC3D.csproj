@@ -6,4 +6,16 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Irony">
+      <HintPath>..\..\..\..\..\compiladores2\Irony.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Instrucciones\" />
+    <Folder Include="General\" />
+    <Folder Include="TablaSimbolos\" />
+  </ItemGroup>
+
 </Project>
