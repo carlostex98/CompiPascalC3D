@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Instrucciones\" />
     <Folder Include="General\" />
-    <Folder Include="TablaSimbolos\" />
   </ItemGroup>
 
 </Project>
