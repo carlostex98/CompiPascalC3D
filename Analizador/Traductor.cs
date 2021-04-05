@@ -68,6 +68,10 @@ namespace CompiPascalC3D.Analizador
             var while_ = ToTerm("while");
             var do_ = ToTerm("do");
 
+            var type_ = ToTerm("type");
+            var array_ = ToTerm("array");
+            var object_ = ToTerm("object");
+
             var graficar_ts = ToTerm("graficar_ts");
 
             var case_ = ToTerm("case");
@@ -154,8 +158,12 @@ namespace CompiPascalC3D.Analizador
             NonTerminal dec_func = new NonTerminal("dec_func");
 
 
-            NonTerminal dec_arreglo = new NonTerminal("dec_func");
-            NonTerminal dec_arreglo = new NonTerminal("dec_func");
+            NonTerminal dec_arreglo = new NonTerminal("dec_arreglo");
+            NonTerminal dims_arreglo = new NonTerminal("dims_arreglo");
+
+
+            NonTerminal dec_type = new NonTerminal("dec_type");
+            NonTerminal var_type = new NonTerminal("var_type");
 
 
             //NonTerminal  = new NonTerminal("");
@@ -169,6 +177,22 @@ namespace CompiPascalC3D.Analizador
             super_instr.Rule
                 = instrucciones + super_instr
                 | instrucciones
+                ;
+
+            dec_arreglo.Rule = type_ + identificador + igual + array_ + cizq + dims_arreglo +cder + of_ + type_var + ptcoma;
+
+            dims_arreglo.Rule 
+                = numero + punto + punto + numero + coma + dims_arreglo
+                | numero + punto + punto + numero 
+                ;
+
+            dec_type.Rule
+                = identificador + igual + object_ + var_type + end_ + ptcoma;
+                ;
+
+            var_type.Rule 
+                = var_ + identificador + dpunto + type_var + ptcoma + var_type
+                | var_ + identificador + dpunto + type_var + ptcoma
                 ;
 
             instrucciones.Rule
