@@ -8,7 +8,7 @@ namespace CompiPascalC3D.General
     public class Primitivo
     {
 
-        public object valor;
+        public string valor;
         public enum tipo_val
         {
             INT,
@@ -19,7 +19,7 @@ namespace CompiPascalC3D.General
 
         public tipo_val t_val;
 
-        public Primitivo(tipo_val t, object valor)
+        public Primitivo(tipo_val t, string valor)
         {
             this.t_val = t;
             this.valor = valor;

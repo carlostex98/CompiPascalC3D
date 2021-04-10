@@ -21,6 +21,8 @@ namespace CompiPascalC3D.General
         public LinkedList<string[]> graficar = new LinkedList<string[]>();
         public LinkedList<string[]> simbolos = new LinkedList<string[]>();
 
+        
+
         static Maestro() { }
         private Maestro() { }
         public static Maestro Instance

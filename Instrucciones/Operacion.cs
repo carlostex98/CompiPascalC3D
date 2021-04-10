@@ -139,12 +139,11 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                if (Convert.ToDouble(b.valor) == Convert.ToDouble(0))
-                {
-                    throw new Error(0,0, "no se puede dividir entre cero", Error.Tipo_error.SEMANTICO);
-                }
+                int t = Tres.Instance.obtenerTemporal();
+                string g = $"T{Convert.ToString(t)} = {a.valor}/{b.valor};";
+                Tres.Instance.agregarLinea(g);
 
-                return new Primitivo(Primitivo.tipo_val.INT, (object)(Convert.ToDouble(a.valor) / Convert.ToDouble(b.valor)));
+                return new Primitivo(Primitivo.tipo_val.INT, "T"+Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.MULTIPLICACION)
             {
@@ -158,7 +157,11 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.INT, (object)(Convert.ToDouble(a.valor) * Convert.ToDouble(b.valor)));
+                int t = Tres.Instance.obtenerTemporal();
+                string g = $"T{Convert.ToString(t)} = {a.valor} * {b.valor};";
+                Tres.Instance.agregarLinea(g);
+
+                return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.RESTA)
             {
@@ -172,7 +175,13 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.INT, (object)(Convert.ToDouble(a.valor) - Convert.ToDouble(b.valor)));
+
+                int t = Tres.Instance.obtenerTemporal();
+                string g = $"T{Convert.ToString(t)} = {a.valor} - {b.valor};";
+                Tres.Instance.agregarLinea(g);
+
+                return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(t));
+
             }
             else if (tipo == Tipo_operacion.MODULO)
             {
@@ -186,7 +195,11 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.INT, (object)(Convert.ToDouble(a.valor) % Convert.ToDouble(b.valor)));
+                int t = Tres.Instance.obtenerTemporal();
+                string g = $"T{Convert.ToString(t)} = {a.valor} % {b.valor};";
+                Tres.Instance.agregarLinea(g);
+
+                return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.SUMA)
             {
@@ -195,12 +208,22 @@ namespace CompiPascalC3D.Instrucciones
                 //si los dos son string hace la concatenacion
                 if (a.t_val == Primitivo.tipo_val.CADENA || b.t_val == Primitivo.tipo_val.CADENA)
                 {
-                    
-                    return new Primitivo(Primitivo.tipo_val.CADENA, (object)(Convert.ToString(a.valor) + Convert.ToString(b.valor)));
+
+                    //todo manejo del heap
+
+                    int t = Tres.Instance.obtenerTemporal();
+                    string g = $"T{Convert.ToString(t)} = {a.valor}/{b.valor};";
+                    Tres.Instance.agregarLinea(g);
+
+                    return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(t));
                 }
                 else if((a.t_val == Primitivo.tipo_val.INT || a.t_val == Primitivo.tipo_val.DECIMAL) &&(b.t_val == Primitivo.tipo_val.INT || b.t_val == Primitivo.tipo_val.DECIMAL))
                 {
-                    return new Primitivo(Primitivo.tipo_val.INT, (object)( Convert.ToDouble(a.valor) + Convert.ToDouble(b.valor)));
+                    int t = Tres.Instance.obtenerTemporal();
+                    string g = $"T{Convert.ToString(t)} = {a.valor} + {b.valor};";
+                    Tres.Instance.agregarLinea(g);
+
+                    return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(t));
                 }
                 else
                 {
@@ -216,16 +239,42 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(a.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.INT, (object)(Convert.ToDouble(a.valor) *  Convert.ToDouble(-1)));
+                int t = Tres.Instance.obtenerTemporal();
+                string g = $"T{Convert.ToString(t)} = {a.valor} * -1;";
+                Tres.Instance.agregarLinea(g);
+
+                return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(t));
+
             }
             else if (tipo == Tipo_operacion.NEGACION)
             {
+
+                //usar instruccion if-goto TODO
+
                 if (a.t_val != Primitivo.tipo_val.BOOLEANO)
                 {
                     throw new Error(0, 0, "Operador no booleano: " + Convert.ToString(a.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)!(Convert.ToBoolean(a.valor)));
+
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} == 0)"+"{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
+
             }
             else if (tipo == Tipo_operacion.MAYOR_QUE)
             {
@@ -240,7 +289,23 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(Convert.ToDouble(a.valor) > Convert.ToDouble(b.valor)));
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} > {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.MENOR_QUE)
             {
@@ -254,7 +319,23 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(Convert.ToDouble(a.valor) < Convert.ToDouble(b.valor)));
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} < {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.MAYOR_I)
             {
@@ -268,7 +349,23 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(Convert.ToDouble(a.valor) >= Convert.ToDouble(b.valor)));
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} >= {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.MENOR_I)
             {
@@ -282,7 +379,23 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(Convert.ToDouble(a.valor) <= Convert.ToDouble(b.valor)));
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} <= {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.OO)
             {
@@ -296,7 +409,27 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no booleano: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(Convert.ToBoolean(a.valor) || Convert.ToBoolean(b.valor)));
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+
+                string ax = $"T${Convert.ToString(t)} = ${a.valor} + ${b.valor};";
+
+                string a1 = $"if({a.valor} >= {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(ax);
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.YY)
             {
@@ -310,68 +443,73 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no booleano: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
-                return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(Convert.ToBoolean(a.valor) && Convert.ToBoolean(b.valor)));
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+
+                string ax = $"T${Convert.ToString(t)} = ${a.valor} * ${b.valor};";
+
+                string a1 = $"if({a.valor} == 1)" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                Tres.Instance.agregarLinea(ax);
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
+
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.EQUIVALENCIA)
             {
-                //esto no tira error :)
-                if (a.t_val != b.t_val)
-                {
-                    return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(false));
-                }
-                else
-                {
-                    //numero, cadena, booleano
-                    if (a.t_val == Primitivo.tipo_val.CADENA)
-                    {
-                        bool xc = Convert.ToString(a.valor) == Convert.ToString(b.valor);
-                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(xc));
-                    }
+                //TODO coso del if
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} == {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
+                
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
 
-                    if (a.t_val == Primitivo.tipo_val.INT || a.t_val == Primitivo.tipo_val.DECIMAL)
-                    {
-                        bool xc = Convert.ToDouble(a.valor) == Convert.ToDouble(b.valor);
-                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(xc));
-                    }
-
-                    if (a.t_val == Primitivo.tipo_val.BOOLEANO)
-                    {
-                        bool xc = Convert.ToBoolean(a.valor) == Convert.ToBoolean(b.valor);
-                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(xc));
-                    }
-
-                }
-
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.DIFERENCIA)
             {
                 //esto no tira error :)
-                if (a.t_val != b.t_val)
-                {
-                    return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(true));
-                }
-                else
-                {
-                    //numero, cadena, booleano
-                    if (a.t_val == Primitivo.tipo_val.CADENA)
-                    {
-                        bool xc = Convert.ToString(a.valor) != Convert.ToString(b.valor);
-                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(xc));
-                    }
+                //TODO coso del if
 
-                    if (a.t_val == Primitivo.tipo_val.INT || a.t_val == Primitivo.tipo_val.DECIMAL)
-                    {
-                        bool xc = Convert.ToDouble(a.valor) != Convert.ToDouble(b.valor);
-                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(xc));
-                    }
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
+                string a1 = $"if({a.valor} != {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+                string a5 = $"T${Convert.ToString(t)} = 1;";
+                string a6 = $"L${Convert.ToString(t2)}:";
 
-                    if (a.t_val == Primitivo.tipo_val.BOOLEANO)
-                    {
-                        bool xc = Convert.ToBoolean(a.valor) != Convert.ToBoolean(b.valor);
-                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)(xc));
-                    }
+                Tres.Instance.agregarLinea(a1);
+                Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a6);
 
-                }
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
 
             }
             else if (tipo == Tipo_operacion.PRIMITIVO)
@@ -380,7 +518,7 @@ namespace CompiPascalC3D.Instrucciones
             }
             else if (tipo == Tipo_operacion.UNICO)
             {
-                return new Primitivo(a.t_val, (object)a.valor);
+                return new Primitivo(a.t_val, a.valor);
             }
             else
             {
