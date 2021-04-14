@@ -44,47 +44,43 @@ namespace CompiPascalC3D.Instrucciones
             foreach (Case t in casos)
             {
                 //recorremos los casos
-
+                TSimbolo tablalocal = new TSimbolo(ts);
                 Primitivo i = (Primitivo)t.getOperacion().ejecutar(ts);
                 Operacion equiv = new Operacion( new Operacion(i), new Operacion(d), Operacion.Tipo_operacion.EQUIVALENCIA );
                 Primitivo p = (Primitivo)equiv.ejecutar(ts);
-                
 
-                if ((Boolean)p.valor)
+                //inicio del caso
+                int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+                int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                string a1 = $"if({p.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
+                string a3 = $"goto L{Convert.ToString(t2)};";
+                string a4 = $"L{Convert.ToString(t1)}:";
+
+                string a6 = $"L${Convert.ToString(t2)}:";
+
+                Tres.Instance.agregarLinea(a1);
+
+                Tres.Instance.agregarLinea(a3);
+                Tres.Instance.agregarLinea(a4);
+                //ejecutar instrucciones
+                foreach (Instruccion ins in t.getInstrucciones())
                 {
-                    //ejecuta el coso del caso
-                    foreach (Instruccion s in t.getInstrucciones())
+
+                    Retorno r = (Retorno)ins.ejecutar(tablalocal);
+                    if (r != null)
                     {
-                        Retorno r = (Retorno)s.ejecutar(local);
-                        if (r!=null)
+                        if (r.t_val == Retorno.tipoRetorno.EXIT)
                         {
-                            if (r.t_val == Retorno.tipoRetorno.EXIT)
-                            {
-                                return r;
-                            }
-                            else if (r.t_val == Retorno.tipoRetorno.BREAK)
-                            {
-                                br = true;
-                                break;
-                            }
-                            else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
-                            {
-                                return r;
-                            }
+                            return r;
+                        }
+                        else if (r.t_val == Retorno.tipoRetorno.BREAK || r.t_val == Retorno.tipoRetorno.CONTINUE)
+                        {
+                            return r;
                         }
 
-                        
-                        //s.ejecutar(local);
                     }
-                    //aqui el caso se cumplió normal
-                    st = true;
                 }
-
-                if (br)
-                {
-                    break;
-                }
-
+                Tres.Instance.agregarLinea(a6);
             }
 
             if (this.instr_else != null && !st)

@@ -36,6 +36,8 @@ namespace CompiPascalC3D.Instrucciones
                 throw new Error(linea, columna, "La variable es nula: "+variable, Error.Tipo_error.SINTACTICO);
             }
 
+            //coso de 
+
             Primitivo p = s.getValor();
 
             return p;

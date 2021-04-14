@@ -92,7 +92,7 @@ namespace CompiPascalC3D.Instrucciones
                     }
 
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.CADENA, (object)valor.valor));
+                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.CADENA, valor.valor));
 
                     foreach (string t in nombres)
                     {
@@ -108,7 +108,7 @@ namespace CompiPascalC3D.Instrucciones
                     }
 
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.INT, (object)Convert.ToInt32(valor.valor)));
+                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.INT, valor.valor));
 
                     foreach (string t in nombres)
                     {
@@ -124,7 +124,7 @@ namespace CompiPascalC3D.Instrucciones
                     }
 
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.DECIMAL, (object)Convert.ToDouble(valor.valor)));
+                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.DECIMAL, valor.valor));
 
                     foreach (string t in nombres)
                     {
@@ -140,7 +140,7 @@ namespace CompiPascalC3D.Instrucciones
                     }
 
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.BOOLEANO, (object)Convert.ToBoolean(valor.valor)));
+                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.BOOLEANO, valor.valor));
 
                     foreach (string t in nombres)
                     {

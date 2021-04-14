@@ -25,46 +25,64 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts) 
         {
+            TSimbolo tablaLocal = new TSimbolo(ts);
+            int t0 = Tres.Instance.nuevaEtiqueta();//retorno
+            string a45 = $"L{Convert.ToString(t0)}:";
+            Tres.Instance.agregarLinea(a45);
+
             Primitivo condres = (Primitivo)condicion.ejecutar(ts);
+
             if (condres.t_val != Primitivo.tipo_val.BOOLEANO)
             {
                 throw new Error(linea, columna, "Se requiere una valor booleano", Error.Tipo_error.SEMANTICO);
             }
             bool br = false;
 
-            while ((Boolean)(condres.valor))
+
+            int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
+            int t2 = Tres.Instance.nuevaEtiqueta();//falso
+            string a1 = $"if({condres.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
+            string a3 = $"goto L{Convert.ToString(t2)};";
+            string a4 = $"L{Convert.ToString(t1)}:";
+
+            string a6 = $"L${Convert.ToString(t2)}:";
+
+            Tres.Instance.agregarLinea(a1);
+
+            Tres.Instance.agregarLinea(a3);
+
+
+
+
+            Tres.Instance.agregarLinea(a4);
+            //ejecutar instrucciones
+            foreach (Instruccion ins in listaInstrucciones)
             {
-                TSimbolo tablaLocal = new TSimbolo(ts);//le pasamos los valores actuales a la copia de tabla de simbolos
-                
-                foreach (Instruccion ins in listaInstrucciones)
+                Retorno r = (Retorno)ins.ejecutar(tablaLocal);
+                if (r != null)
                 {
-                    Retorno r = (Retorno)ins.ejecutar(tablaLocal);
-                    if (r != null)
+                    if (r.t_val == Retorno.tipoRetorno.EXIT)
                     {
-                        if (r.t_val == Retorno.tipoRetorno.EXIT)
-                        {
-                            return r;
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.BREAK)
-                        {
-                            br = true;
-                            break;
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
-                        {
-                            break;
-                        }
+                        return r;
+                    }
+                    else if (r.t_val == Retorno.tipoRetorno.BREAK)
+                    {
+                        br = true;
+                        break;
+                    }
+                    else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
+                    {
+                        break;
                     }
                 }
-
-                if (br)
-                {
-                    break;
-                }
-
-                condres = (Primitivo)condicion.ejecutar(ts);
-
             }
+
+            string a31 = $"goto L{Convert.ToString(t0)};";
+            Tres.Instance.agregarLinea(a31);
+
+            Tres.Instance.agregarLinea(a6);
+
+
             return null;
         }
     }
