@@ -25,47 +25,44 @@ namespace CompiPascalC3D.Instrucciones
         {
 
             TSimbolo tablaLocal = new TSimbolo(ts);
-            Primitivo local_cond = null;
-            bool br = false;
 
-            do
+            int a = Tres.Instance.nuevaEtiqueta();//verdadero
+            int b = Tres.Instance.nuevaEtiqueta();//falso
+
+            string a45 = $"L{Convert.ToString(a)}:";
+            Tres.Instance.agregarLinea(a45);
+
+            foreach (Instruccion ins in listaInstrucciones)
             {
-                foreach (Instruccion ins in listaInstrucciones)
+                Retorno r = (Retorno)ins.ejecutar(tablaLocal);
+                if (r != null)
                 {
-                    Retorno r = (Retorno)ins.ejecutar(tablaLocal);
-                    if (r != null)
+                    if (r.t_val == Retorno.tipoRetorno.EXIT)
                     {
-                        if (r.t_val == Retorno.tipoRetorno.EXIT)
-                        {
-                            return r;
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.BREAK)
-                        {
-                            br = true;
-                            return null;
-                            break;
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
-                        {
-                            break;
-                        }
+                        return r;
                     }
-
-                    if (br)
+                    else if (r.t_val == Retorno.tipoRetorno.BREAK)
+                    {
+                        
+                        //return null;
+                        break;
+                    }
+                    else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
                     {
                         break;
                     }
-
-                    ins.ejecutar(tablaLocal);
                 }
+            }
 
-                local_cond = (Primitivo)condicion.ejecutar(ts);
-                if (local_cond.t_val != Primitivo.tipo_val.BOOLEANO)
-                {
-                    throw new Error(linea, columna, "Se esperava resultado booleano en condicion de repeat", Error.Tipo_error.SEMANTICO);
-                }
+            Primitivo p = (Primitivo)condicion.ejecutar(tablaLocal);
+            string a1 = $"if({p.valor} >= 1)" + "{" + $" goto L{a};" + "}";
+            string a3 = $"goto L{Convert.ToString(b)};";
+            string a6 = $"L${Convert.ToString(b)}:";
 
-            } while ((Boolean)local_cond.valor);
+            Tres.Instance.agregarLinea(a1);
+            Tres.Instance.agregarLinea(a3);
+            Tres.Instance.agregarLinea(a6);
+
 
             return null;
         }

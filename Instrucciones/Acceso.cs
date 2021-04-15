@@ -30,15 +30,40 @@ namespace CompiPascalC3D.Instrucciones
                 throw new Error(linea, columna, "La variable no existe: "+variable, Error.Tipo_error.SINTACTICO);
             }
 
-            if (s.valor.valor == null)
+            int x = Tres.Instance.nuevoTemporal();
+            string a = "";
+
+            if (s.locacion == 0)
             {
-                //variable nula tiramos throw
-                throw new Error(linea, columna, "La variable es nula: "+variable, Error.Tipo_error.SINTACTICO);
+                a = $"T{Convert.ToString(x)} = stack[{Convert.ToString(s.dirStack)}];";
+            }
+            else
+            {
+                a = $"T{Convert.ToString(x)} = stack[{Convert.ToString(s.dirHeap)}];";
+            }
+            Tres.Instance.agregarLinea(a);
+
+            Primitivo.tipo_val tpx = Primitivo.tipo_val.CADENA;
+            switch (s.Tipo)
+            {
+                case Simbolo.tipo.STRING:
+                    tpx = Primitivo.tipo_val.CADENA;
+                    break;
+
+                case Simbolo.tipo.BOOLEAN:
+                    tpx = Primitivo.tipo_val.BOOLEANO;
+                    break;
+
+                case Simbolo.tipo.INTEGER:
+                    tpx = Primitivo.tipo_val.CADENA;
+                    break;
+
+                case Simbolo.tipo.REAL:
+                    tpx = Primitivo.tipo_val.DECIMAL;
+                    break;
             }
 
-            //coso de 
-
-            Primitivo p = s.getValor();
+            Primitivo p = new Primitivo(tpx, $"T{Convert.ToString(x)}");
 
             return p;
         }

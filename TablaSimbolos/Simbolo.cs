@@ -19,30 +19,32 @@ namespace CompiPascalC3D.TablaSimbolos
         };
 
 
-        public string ide;
-        public Primitivo valor;
+        
+        
         public tipo Tipo;
+        public int dirStack;
+        public int dirHeap;//solo para las funciones y strings
+        public int locacion = 0; // 0 heap, 1 stack
 
 
-        public Simbolo(String idx, tipo t, Primitivo v)
+        public Simbolo(tipo t, int v, int tp)
         {
-            this.valor = v;
-            this.ide = idx;
+            this.locacion = tp;
+            if (tp == 0)
+            {
+                this.dirStack = v;
+            }
+            else
+            {
+                this.dirHeap = v;
+            }
             this.Tipo = t;
         }
-        public String getId()
-        {
-            return ide;
-        }
+        
 
         public Primitivo getValor()
         {
-            return valor;
-        }
-
-        public void setValor(Primitivo v)
-        {
-            this.valor = v;
+            return null;
         }
 
         public tipo GetTipo()

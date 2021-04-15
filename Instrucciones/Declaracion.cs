@@ -32,46 +32,119 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
-
+            int dir = 0;
             if (opr == null)
             {
+                
+
                 //valor nulo, sele asigna el tipo
                 if (tip == Simbolo.tipo.STRING)
                 {
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.CADENA, null));
 
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = -1;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = -1;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
                 }
                 else if (tip == Simbolo.tipo.INTEGER)
                 {
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.INT, null));
-
+                    
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
                 }
                 else if (tip == Simbolo.tipo.REAL)
                 {
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.DECIMAL, null));
-
+                    
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
                 }
                 else if (tip == Simbolo.tipo.BOOLEAN)
                 {
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.INT, null));
+                    
 
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
@@ -91,11 +164,30 @@ namespace CompiPascalC3D.Instrucciones
                         throw new Error(linea, columna, "Se recibió otro valor en variable tipo cadena", Error.Tipo_error.SINTACTICO);
                     }
 
+                    //hay que arreglarlo jejejeje
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.CADENA, valor.valor));
+                    
 
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = 0;";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
@@ -107,11 +199,29 @@ namespace CompiPascalC3D.Instrucciones
                         throw new Error(linea, columna, "Se recibió otro valor en variable tipo entero", Error.Tipo_error.SINTACTICO);
                     }
 
-
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.INT, valor.valor));
+                    
 
                     foreach (string t in nombres)
                     {
+
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = {valor.valor};";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = {valor.valor};";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+                        
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
@@ -124,10 +234,29 @@ namespace CompiPascalC3D.Instrucciones
                     }
 
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.DECIMAL, valor.valor));
+                    
 
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = {valor.valor};";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = {valor.valor};";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }
@@ -140,10 +269,29 @@ namespace CompiPascalC3D.Instrucciones
                     }
 
 
-                    Simbolo ex = new Simbolo(nombre, tip, new Primitivo(Primitivo.tipo_val.BOOLEANO, valor.valor));
+                    
 
                     foreach (string t in nombres)
                     {
+                        if (ts.estructura == 0)
+                        {
+                            dir = Tres.Instance.nuevoStack();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            string a = $"stack[SP] = {valor.valor};";
+                            Tres.Instance.agregarLinea(a);
+                        }
+                        else
+                        {
+                            dir = Tres.Instance.nuevoHeap();
+                            Tres.Instance.agregarLinea("HP = HP + 1;");
+                            string a = $"heap[HP] = {valor.valor};";
+                            Tres.Instance.agregarLinea(a);
+                        }
+
+
+
+                        Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
                         ts.agregar(t, ex);
                     }

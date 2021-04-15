@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CompiPascal.General;
+
 using CompiPascalC3D.General;
 
 namespace CompiPascalC3D.TablaSimbolos
@@ -11,11 +11,25 @@ namespace CompiPascalC3D.TablaSimbolos
         public TSimbolo heredado;
         public Dictionary<string, Simbolo> variables = new Dictionary<string, Simbolo>();
         public string especial = "";
+        public int estructura = 0;
 
         public TSimbolo(TSimbolo ts = null)
         {
             this.heredado = ts;
-        } 
+            //recursividad para el contexto
+
+            TSimbolo aux = this.heredado;
+            while (aux != null)
+            {
+                if (aux.estructura == 1)
+                {
+                    this.estructura = 1;
+                    break;
+                }
+                aux = aux.heredado;
+            }
+
+        }
 
 
         public bool agregar(string nombre, Simbolo sb)
@@ -95,52 +109,8 @@ namespace CompiPascalC3D.TablaSimbolos
 
         public bool redefinir(string nombre, Primitivo sb)
         {
-            //verificamos que exista, de lo contrario retorna false
-            //todo: varificar que sean del mismo tipo
-            //System.Diagnostics.Debug.WriteLine(nombre);
-            //System.Diagnostics.Debug.WriteLine(sb.valor);
-            //System.Diagnostics.Debug.WriteLine("-----+");
-
-
-            if (this.variables.ContainsKey(nombre))
-            {
-                //this.variables[nombre] = sb;
-                Simbolo s;
-                this.variables.TryGetValue(nombre, out s);
-
-                if (s == null)
-                {
-                    //variable no definida
-
-                }
-                
-                //s.setValor(sb);
-                Simbolo mm = new Simbolo(nombre, s.Tipo, sb);
-                this.variables[nombre] = mm;
-                return true;
-            }
-            else
-            {
-                //recorremos los demas contextos
-                TSimbolo aux = this.heredado;
-                while (aux != null)
-                {
-                    if (aux.variables.ContainsKey(nombre))
-                    {
-                        //aux.variables[nombre] = sb;
-                        Simbolo s;
-                        aux.variables.TryGetValue(nombre, out s);
-                        //s.setValor(sb);
-                        Simbolo mm = new Simbolo(nombre, s.Tipo, sb);
-                   
-                        aux.variables[nombre] = mm;
-                        return true;
-                    }
-                    aux = aux.heredado;
-                }
-
-            }
-
+            
+            //solo buscar si existe
 
 
             return false;

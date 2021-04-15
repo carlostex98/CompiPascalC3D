@@ -14,6 +14,7 @@ namespace CompiPascalC3D.General
         public int contadorTemporal = 0;
         public int contadorEtiqueta = 0;
         public int contadorStack = 0;
+        public int contadorHeap = 0;
         public int heap = 10000;
         public int stack = 10000;
 
@@ -60,8 +61,18 @@ namespace CompiPascalC3D.General
 
         public int nuevoStack()
         {
+            //retorna una posicion del stack para las variables int, boolean, real
+
             contadorStack++;
             return contadorStack;
+        }
+
+        public int nuevoHeap()
+        {
+            //retorna una posicion del stack para las variables int, boolean, real
+
+            contadorHeap++;
+            return contadorHeap;
         }
 
         public int nuevaEtiqueta()

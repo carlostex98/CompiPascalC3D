@@ -73,7 +73,26 @@ namespace CompiPascalC3D.Instrucciones
 
                 }
 
-                bool x = ts.esEspecial(id);
+                //por ser traduccion no se redefine en cuestion
+
+                int x = Tres.Instance.nuevoTemporal();
+                string b ;
+                string a ;
+
+                if (s.locacion == 0)
+                {
+                    a = $"stack[{Convert.ToString(s.dirStack)}] = {e.valor};";
+                    b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirStack)}";
+                }
+                else
+                {
+                    a = $"stack[{Convert.ToString(s.dirHeap)}] = {e.valor};";
+                    b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirHeap)}";
+                }
+                Tres.Instance.agregarLinea(b);
+                Tres.Instance.agregarLinea(a);
+
+                /*bool x = ts.esEspecial(id);
 
                 ts.redefinir(id, e);
                 Simbolo xd = ts.obtener(id);
@@ -86,7 +105,7 @@ namespace CompiPascalC3D.Instrucciones
                     Primitivo sm = ts.obtener(id).valor;
                     //return sm;
                     return new Retorno(Retorno.tipoRetorno.EXIT, sm);
-                }
+                }*/
             }
 
            
