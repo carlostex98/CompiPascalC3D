@@ -36,8 +36,26 @@ namespace CompiPascalC3D.Instrucciones
         public Object ejecutar(TSimbolo ts)
         {
             //se guarda en la singleton
+            string a = $"void {nombre} ()" + "{ ";
+            Tres.Instance.agregarLinea(a);
+            TSimbolo local = new TSimbolo();
+            local.estructura = 1; //le decimos que es en el heap jaja
+
+            foreach (Declaracion vl in variables)
+            {
+                vl.ejecutar(local);
+            }
+
+            foreach (Instruccion ins in listaInstrucciones)
+            {
+                ins.ejecutar(local);
+            }
+
+
             FuncionDato g = new FuncionDato(nombre, listaInstrucciones, variables, tipo, tret);
+            g.referencia = local;
             Maestro.Instance.guardarFuncion(nombre, g);
+
 
             return null;
         }

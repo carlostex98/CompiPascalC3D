@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CompiPascalC3D.Instrucciones;
+using CompiPascalC3D.TablaSimbolos;
 
 namespace CompiPascalC3D.General
 {
@@ -17,6 +18,8 @@ namespace CompiPascalC3D.General
 
         public tipoF tipo;
         public tipoR t_retorno;
+        public TSimbolo referencia;
+
 
         public FuncionDato(string n, LinkedList<Instruccion> lst, LinkedList<Declaracion> vars, tipoF t, tipoR r)
         {
