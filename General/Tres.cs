@@ -21,6 +21,7 @@ namespace CompiPascalC3D.General
         public int usoHeap = 0;
 
         public LinkedList<string> codigo = new LinkedList<string>();
+        public LinkedList<string[]> reglas = new LinkedList<string[]>();
 
         /*
          
@@ -47,6 +48,11 @@ namespace CompiPascalC3D.General
             }
         }
 
+
+        public void nuevaRegla(string tipo, int numero, string el, string added)
+        {
+
+        }
 
         public void agregarLinea(string ln)
         {
