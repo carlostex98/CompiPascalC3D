@@ -19,7 +19,7 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
-            return new Retorno(Retorno.tipoRetorno.BREAK, null);
+            return new Retorno(Retorno.tipoRetorno.CONTINUE, null);
         }
     }
 }

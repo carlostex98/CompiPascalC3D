@@ -22,7 +22,7 @@ namespace CompiPascalC3D.Instrucciones
             {
                 foreach (KeyValuePair<string, Simbolo> t in ts.variables)
                 {
-                    Maestro.Instance.agragarGrafica(t.Key, t.Value.Tipo.ToString(), t.Value.valor.valor.ToString());
+                    Maestro.Instance.agragarGrafica(t.Key, t.Value.Tipo.ToString(), "e");
                 }
                 ts = ts.heredado;
             }

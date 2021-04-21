@@ -22,7 +22,7 @@ namespace CompiPascalC3D.Analizador
         public void codigo(string entrada)
         {
             //analisis del ast
-            Traductor traductor = new Traductor();
+            Gramatica traductor = new Gramatica();
             LanguageData lenguaje = new LanguageData(traductor);
             Parser parser = new Parser(lenguaje);
             ParseTree arbol = parser.Parse(entrada);
@@ -34,6 +34,7 @@ namespace CompiPascalC3D.Analizador
             {
                 //indica error
                 //Maestro.Instance.addMessage("Entrada incorrecta");
+                System.Diagnostics.Debug.WriteLine("-----");
                 foreach (Irony.LogMessage a in arbol.ParserMessages)
                 {
                     //System.Diagnostics.Debug.WriteLine(a.Message, a.Location.Line, a.Location.Column);

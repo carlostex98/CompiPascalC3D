@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CompiPascalC3D.General;
+using CompiPascalC3D.Analizador;
 
 namespace CompiPascalC3D
 {
@@ -17,5 +19,20 @@ namespace CompiPascalC3D
             InitializeComponent();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //compilamos
+            compile();
+        }
+
+        private void compile()
+        {
+            Maestro.Instance.clear();
+            Tres.Instance.limpiar();
+            CGramatica eval = new CGramatica();
+            eval.analizar_arbol(entrada.Text);
+            salida.Text = Tres.Instance.devolver_codigo();
+
+        }
     }
 }

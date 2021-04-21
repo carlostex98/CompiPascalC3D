@@ -29,23 +29,45 @@ namespace CompiPascalC3D
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.entrada = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.salida = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // entrada
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(36, 30);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(100, 96);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.entrada.Location = new System.Drawing.Point(12, 12);
+            this.entrada.Name = "entrada";
+            this.entrada.Size = new System.Drawing.Size(571, 392);
+            this.entrada.TabIndex = 0;
+            this.entrada.Text = "";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 415);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Compilar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // salida
+            // 
+            this.salida.Location = new System.Drawing.Point(604, 13);
+            this.salida.Name = "salida";
+            this.salida.Size = new System.Drawing.Size(343, 391);
+            this.salida.TabIndex = 2;
+            this.salida.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.richTextBox1);
+            this.ClientSize = new System.Drawing.Size(959, 459);
+            this.Controls.Add(this.salida);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.entrada);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -54,7 +76,9 @@ namespace CompiPascalC3D
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox entrada;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox salida;
     }
 }
 

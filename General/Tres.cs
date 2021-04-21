@@ -54,6 +54,29 @@ namespace CompiPascalC3D.General
 
         }
 
+
+        public void limpiar()
+        {
+            contadorEtiqueta = 0;
+            contadorTemporal = 0;
+            contadorHeap = 0;
+            contadorStack = 0;
+
+            codigo = new LinkedList<string>();
+            reglas = new LinkedList<string[]>();
+        }
+
+        public string devolver_codigo()
+        {
+            string t="";
+            foreach (string n in codigo)
+            {
+                t += n + "\n";
+            }
+
+            return t;
+        }
+
         public void agregarLinea(string ln)
         {
             codigo.AddLast(ln);

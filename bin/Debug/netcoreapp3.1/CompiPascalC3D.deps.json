@@ -7,8 +7,19 @@
   "targets": {
     ".NETCoreApp,Version=v3.1": {
       "CompiPascalC3D/1.0.0": {
+        "dependencies": {
+          "Irony": "1.1.0.0"
+        },
         "runtime": {
           "CompiPascalC3D.dll": {}
+        }
+      },
+      "Irony/1.1.0.0": {
+        "runtime": {
+          "Irony.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
         }
       }
     }
@@ -16,6 +27,11 @@
   "libraries": {
     "CompiPascalC3D/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Irony/1.1.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

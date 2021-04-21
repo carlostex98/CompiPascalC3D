@@ -26,7 +26,7 @@ namespace CompiPascalC3D.Instrucciones
             {
                 Primitivo x = (Primitivo)cc.ejecutar(ts);
 
-                Maestro.Instance.addOutputNor(x.valor.ToString());
+                Tres.Instance.agregarLinea($"printf({x.valor});");
                 //System.Diagnostics.Debug.WriteLine(x.valor.ToString());
             }
 
