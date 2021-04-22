@@ -113,6 +113,7 @@ namespace CompiPascalC3D.General
 
         public int obtenerTemporal()
         {
+            contadorTemporal++;
             return contadorTemporal;
         }
 

@@ -264,8 +264,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
@@ -296,8 +296,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
@@ -326,8 +326,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
@@ -356,8 +356,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
@@ -386,8 +386,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
@@ -413,14 +413,14 @@ namespace CompiPascalC3D.Instrucciones
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
 
-                string ax = $"T${Convert.ToString(t)} = ${a.valor} + ${b.valor};";
+                string ax = $"T${Convert.ToString(t)} = {a.valor} + {b.valor};";
 
-                string a1 = $"if({a.valor} >= {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a1 = $"if(T{Convert.ToString(t)} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(ax);
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
@@ -447,14 +447,14 @@ namespace CompiPascalC3D.Instrucciones
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
 
-                string ax = $"T${Convert.ToString(t)} = ${a.valor} * ${b.valor};";
+                string ax = $"T{Convert.ToString(t)} = {a.valor} * {b.valor};";
 
-                string a1 = $"if({a.valor} == 1)" + "{" + $" goto L{t1};" + "}";
+                string a1 = $"if(T{Convert.ToString(t)} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(ax);
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
@@ -475,8 +475,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
                 
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);
@@ -499,8 +499,8 @@ namespace CompiPascalC3D.Instrucciones
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
-                string a5 = $"T${Convert.ToString(t)} = 1;";
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a6 = $"L{Convert.ToString(t2)}:";
 
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a2);

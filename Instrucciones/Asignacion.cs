@@ -75,7 +75,7 @@ namespace CompiPascalC3D.Instrucciones
 
                 //por ser traduccion no se redefine en cuestion
 
-                int x = Tres.Instance.nuevoTemporal();
+                int x = Tres.Instance.obtenerTemporal();
                 string b ;
                 string a ;
 

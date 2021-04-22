@@ -30,7 +30,7 @@ namespace CompiPascalC3D.Instrucciones
                 throw new Error(linea, columna, "La variable no existe: "+variable, Error.Tipo_error.SINTACTICO);
             }
 
-            int x = Tres.Instance.nuevoTemporal();
+            int x = Tres.Instance.obtenerTemporal();
             string a = "";
 
             if (s.locacion == 0)
