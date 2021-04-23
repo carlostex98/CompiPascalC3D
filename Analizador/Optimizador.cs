@@ -121,6 +121,7 @@ namespace CompiPascalC3D.Analizador
 
             asignacion.Rule
                 = identificador + igual +  operacion
+                | identificador + cizq + valor + cder + igual + operacion
                 ;
 
             operacion.Rule
