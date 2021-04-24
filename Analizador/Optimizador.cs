@@ -16,6 +16,7 @@ namespace CompiPascalC3D.Analizador
             //var cadena = new StringLiteral("cadena", "\'");
             CommentTerminal comentario_uno = new CommentTerminal("comentario_uno", "//", "\n", "\r\n");
             CommentTerminal comentario_multi = new CommentTerminal("comentario_multi", "/*", "*/");
+            var cadena = new StringLiteral("cadena", "\"");
             #endregion
 
 
@@ -62,6 +63,7 @@ namespace CompiPascalC3D.Analizador
             NonTerminal instruccion = new NonTerminal("instruccion");
             NonTerminal bloque_if = new NonTerminal("bloque_if");
             NonTerminal etiqueta = new NonTerminal("etiqueta");
+            NonTerminal printf = new NonTerminal("printf");
 
             NonTerminal regla1 = new NonTerminal("regla1");
             NonTerminal regla2 = new NonTerminal("regla2");
@@ -81,14 +83,19 @@ namespace CompiPascalC3D.Analizador
                 ;
 
             instruccion.Rule
-                = asignacion
+                = asignacion + ptcoma
                 | bloque_if
                 | bloque_goto
                 | funcion
                 | etiqueta
+                | printf
                 | regla1
                 | regla2
                 | regla34
+                ;
+
+            printf.Rule
+                =print_+pizq + cadena+ coma+ pizq + identificador+pder+operacion+pder+ptcoma
                 ;
 
             etiqueta.Rule 

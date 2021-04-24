@@ -13,6 +13,8 @@ namespace CompiPascalC3D.Analizador
 
         }
 
+        LinkedList<string> lineas = new LinkedList<string>();
+
         public void optimizar(string entrada)
         {
             Optimizador gramatica = new Optimizador();
@@ -34,7 +36,7 @@ namespace CompiPascalC3D.Analizador
             }
         }
 
-        public void evaluar_instrucciones(ParseTreeNode ps)
+        public LinkedList<string> evaluar_instrucciones(ParseTreeNode ps)
         {
             if (ps.ChildNodes.Count == 2)
             {
@@ -44,19 +46,81 @@ namespace CompiPascalC3D.Analizador
             {
                 //una instruccion
             }
+
+            return new LinkedList<string>();
         }
 
         public string una_instruccion(ParseTreeNode ps)
         {
+
+            ParseTreeNode s = ps.ChildNodes[0];
             if (ps.ChildNodes[0].Term.Name == "asignacion")
             {
                 //vamos al optimizador de la operacion
-            }
+                string g = asignacion(ps.ChildNodes[0]);
 
+            } 
+            else if (ps.ChildNodes[0].Term.Name == "bloque_if")
+            {
+                //this is cool
+                return $"if({operacion_retorno(s.ChildNodes[2])})"+"{"+ una_instruccion(s.ChildNodes[5]) +"}";
+            }
+            else if (ps.ChildNodes[0].Term.Name == "bloque_goto")
+            {
+                return $"goto {s.ChildNodes[1].Token.ValueString};";
+            }
+            else if (ps.ChildNodes[0].Term.Name == "funcion")
+            {
+                //coso de la funcion
+                
+                string aux = "";
+                LinkedList<string> ln = new LinkedList<string>(evaluar_instrucciones(s.ChildNodes[5]));
+                foreach (string i in ln)
+                {
+                    aux += i + "\n";
+                }
+
+                return $"void {s.ChildNodes[1].Token.ValueString} ()"+"{\n" + aux + "}\n";
+
+            }
+            else if (ps.ChildNodes[0].Term.Name == "etiqueta")
+            {
+                return $"{s.ChildNodes[0].Token.ValueString}:";
+            }
+            else if (ps.ChildNodes[0].Term.Name == "regla1")
+            {
+
+            }
+            else if (ps.ChildNodes[0].Term.Name == "regla2")
+            {
+
+            }
+            else if (ps.ChildNodes[0].Term.Name == "regla34")
+            {
+
+            }
 
 
             return "";
         }
+
+        public string operacion_retorno(ParseTreeNode ps)
+        {
+            //solo cuando queremor retornar el argumento del if
+            if (ps.ChildNodes.Count == 4)
+            {
+                return $"{ps.ChildNodes[0].Token.ValueString} {ps.ChildNodes[1].Term.Name} {ps.ChildNodes[1].Term.Name} {ps.ChildNodes[2].Token.ValueString}";
+            }
+
+            if (ps.ChildNodes.Count == 3)
+            {
+                return $"{ps.ChildNodes[0].Token.ValueString} {ps.ChildNodes[1].Term.Name} {ps.ChildNodes[2].Token.ValueString}";
+            }
+
+
+            return ps.ChildNodes[0].Token.ValueString;
+        }
+
 
         public string asignacion(ParseTreeNode ps)
         {
@@ -67,9 +131,15 @@ namespace CompiPascalC3D.Analizador
 
             }
 
+            
+
             string vx = "";
 
             ParseTreeNode psx = ps.ChildNodes[2];
+            if (psx.ChildNodes.Count == 1)
+            {
+                return $"{ps.ChildNodes[1].Token.ValueString} = {psx.ChildNodes[0].Token.ValueString};";
+            }
 
             ParseTreeNode a = psx.ChildNodes[0];
             ParseTreeNode b = psx.ChildNodes[2];
@@ -210,22 +280,6 @@ namespace CompiPascalC3D.Analizador
             }
 
             return $"{ps.ChildNodes[0].Token.ValueString} = {a.Token.ValueString} {psx.ChildNodes[1].Term.Name} {b.Token.ValueString}";
-
-
-            return "";
-        }
-
-
-        public string operacion(ParseTreeNode ps)
-        {
-            if (ps.ChildNodes.Count == 4)
-            {
-                //no es aritmetica por lo tanto no se optimiza en esta regla
-            }
-
-            //si llega este punto se aplican las reglas necesarias
-
-            
 
 
             return "";
