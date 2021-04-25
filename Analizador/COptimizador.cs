@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Irony.Ast;
 using Irony.Parsing;
+using System.Text.RegularExpressions;
 
 namespace CompiPascalC3D.Analizador
 {
@@ -58,6 +59,10 @@ namespace CompiPascalC3D.Analizador
             {
                 //vamos al optimizador de la operacion
                 string g = asignacion(ps.ChildNodes[0]);
+                if (g == "d")
+                {
+                    //indica que es una regla de eliminacion, solo agregamos un cometario para el caso
+                }
 
             } 
             else if (ps.ChildNodes[0].Term.Name == "bloque_if")
@@ -89,20 +94,80 @@ namespace CompiPascalC3D.Analizador
             }
             else if (ps.ChildNodes[0].Term.Name == "regla1")
             {
+                //goto et; instrucciones ln 
+                ParseTreeNode xx = s.ChildNodes[0];
+                ParseTreeNode yy = s.ChildNodes[2];
+                string a = xx.ChildNodes[1].Token.ValueString; //string del goto
+                string inst = instrucciones_cadena(s.ChildNodes[1]); //instrucciones
+                string b = yy.ChildNodes[0].Token.ValueString;//string de la etiqueta
+
+                if (a == b)
+                {
+                    bool m = Regex.IsMatch(inst, @".*L[0-9].*");
+
+                    if (m)
+                    {
+                        //se descarta la optimizacion
+                        string ares = $"goto {a}; \n{inst} \n{b}:";
+                        return ares;
+                    }
+
+                    //optimizamos REGLA 1
+                    string res = $"goto {a}; \n{b}:";
+                    //res += inst;
+
+                    return res;
+                }
+
+                //se descarta
+                return $"goto {a}; \n{inst} \n{b}:";
 
             }
             else if (ps.ChildNodes[0].Term.Name == "regla2")
             {
+                //reduccion de if
+
+                //analisis del if
+                
 
             }
             else if (ps.ChildNodes[0].Term.Name == "regla34")
             {
+                //jejej
+                if(s.ChildNodes[2].Term.Name == "numero" && s.ChildNodes[5].Term.Name == "numero")
+                {
+                    //son candidatos
+                    if (s.ChildNodes[2].Token.ValueString == s.ChildNodes[5].Token.ValueString)
+                    {
+                        //los valores son iguales
+                        //regla 3 se usa el primer goto
+                        return $"goto {s.ChildNodes[9].Token.ValueString};\n";
+                    }
+                    //los valores no son iguales, se usa el segundo goto
+                    //regla 4
 
+                    return $"goto {s.ChildNodes[13].Token.ValueString};\n";
+
+                }
             }
 
 
             return "";
         }
+
+
+        public string instrucciones_cadena(ParseTreeNode ps)
+        {
+            string aux = "";
+            LinkedList<string> ln = new LinkedList<string>(evaluar_instrucciones(ps.ChildNodes[0]));
+            foreach (string i in ln)
+            {
+                aux += i + "\n";
+            }
+
+            return aux;
+        }
+
 
         public string operacion_retorno(ParseTreeNode ps)
         {
