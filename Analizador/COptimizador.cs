@@ -34,6 +34,7 @@ namespace CompiPascalC3D.Analizador
                 //Maestro.Instance.addMessage("Todo correcto");
 
                 //this.evaluarInstrucciones(raiz_grogram.ChildNodes[0]);
+                LinkedList<string> resultado = new LinkedList<string>(evaluar_instrucciones(raiz_grogram.ChildNodes[0]));
             }
         }
 
@@ -41,14 +42,25 @@ namespace CompiPascalC3D.Analizador
         {
             if (ps.ChildNodes.Count == 2)
             {
+                LinkedList<string> temporal = new LinkedList<string>();
+                temporal.AddLast(una_instruccion(ps.ChildNodes[0]));
 
+                LinkedList<string> t1 = new LinkedList<string>(evaluar_instrucciones(ps.ChildNodes[1]));
+                foreach (string item in t1)
+                {
+                    temporal.AddLast(item);
+                }
+                return temporal;
             }
             else
             {
                 //una instruccion
+                LinkedList<string> temporal = new LinkedList<string>();
+                temporal.AddLast(una_instruccion(ps.ChildNodes[0]));
+                return temporal;
             }
 
-            return new LinkedList<string>();
+            //return new LinkedList<string>();
         }
 
         public string una_instruccion(ParseTreeNode ps)
@@ -62,6 +74,7 @@ namespace CompiPascalC3D.Analizador
                 if (g == "d")
                 {
                     //indica que es una regla de eliminacion, solo agregamos un cometario para el caso
+                    return "//se eliminó codigo";
                 }
 
             } 
@@ -123,14 +136,7 @@ namespace CompiPascalC3D.Analizador
                 return $"goto {a}; \n{inst} \n{b}:";
 
             }
-            else if (ps.ChildNodes[0].Term.Name == "regla2")
-            {
-                //reduccion de if
-
-                //analisis del if
-                
-
-            }
+           
             else if (ps.ChildNodes[0].Term.Name == "regla34")
             {
                 //jejej

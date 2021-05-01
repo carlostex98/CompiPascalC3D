@@ -267,11 +267,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a5 = $"T{Convert.ToString(t)} = 1;";
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
 
@@ -299,11 +299,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a5 = $"T{Convert.ToString(t)} = 1;";
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -329,11 +329,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a5 = $"T{Convert.ToString(t)} = 1;";
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -359,11 +359,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a5 = $"T{Convert.ToString(t)} = 1;";
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -389,11 +389,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a5 = $"T{Convert.ToString(t)} = 1;";
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -423,11 +423,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(ax);
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -457,11 +457,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a6 = $"L{Convert.ToString(t2)}:";
                 Tres.Instance.agregarLinea(ax);
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -472,18 +472,18 @@ namespace CompiPascalC3D.Instrucciones
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} == {b.valor})" + "{" + $" goto L{t1};" + "}";
-                string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
                 string a6 = $"L{Convert.ToString(t2)}:";
-                
+                string a2 = $"T{Convert.ToString(t)} = 0;";
+
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -503,11 +503,11 @@ namespace CompiPascalC3D.Instrucciones
                 string a6 = $"L{Convert.ToString(t2)}:";
 
                 Tres.Instance.agregarLinea(a1);
-                Tres.Instance.agregarLinea(a2);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
                 Tres.Instance.agregarLinea(a6);
+                Tres.Instance.agregarLinea(a2);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
 

@@ -90,7 +90,6 @@ namespace CompiPascalC3D.Analizador
                 | etiqueta
                 | printf
                 | regla1
-                | regla2
                 | regla34
                 ;
 
@@ -106,10 +105,7 @@ namespace CompiPascalC3D.Analizador
                 = bloque_goto + instrucciones + etiqueta
                 ;
 
-            regla2.Rule
-                = if_ + pizq + valor+ igual + igual + valor + pder + lizq + goto_ + identificador + ptcoma + lder 
-                + goto_ + identificador + ptcoma + identificador + dpunto + instrucciones + identificador + dpunto
-                ;
+            
 
             regla34.Rule
                 = if_ + pizq + valor + igual + igual + valor + pder + lizq + goto_ + identificador + ptcoma + lder + goto_ + identificador + ptcoma

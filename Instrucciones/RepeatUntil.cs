@@ -43,13 +43,16 @@ namespace CompiPascalC3D.Instrucciones
                     }
                     else if (r.t_val == Retorno.tipoRetorno.BREAK)
                     {
-                        
+                        string br = $"goto L{Convert.ToString(b)}; //break";
+                        Tres.Instance.agregarLinea(br);
                         //return null;
-                        break;
+                        //break;
                     }
                     else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
                     {
-                        break;
+                        string br = $"goto L{Convert.ToString(a)}; //continue";
+                        Tres.Instance.agregarLinea(br);
+                        //break;
                     }
                 }
             }

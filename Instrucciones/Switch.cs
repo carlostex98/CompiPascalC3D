@@ -41,6 +41,13 @@ namespace CompiPascalC3D.Instrucciones
             bool br = false;
             bool st = false;
 
+            //etigueta de salida
+            int f1 = Tres.Instance.nuevaEtiqueta();
+            //string c1 = $"goto L{Convert.ToString(f1)};";
+            //string c2 = $"L{Convert.ToString(f1)}:";
+            //Tres.Instance.agregarLinea(c1);
+            //Tres.Instance.agregarLinea(c2);
+
             foreach (Case t in casos)
             {
                 //recorremos los casos
@@ -48,6 +55,8 @@ namespace CompiPascalC3D.Instrucciones
                 Primitivo i = (Primitivo)t.getOperacion().ejecutar(ts);
                 Operacion equiv = new Operacion( new Operacion(i), new Operacion(d), Operacion.Tipo_operacion.EQUIVALENCIA );
                 Primitivo p = (Primitivo)equiv.ejecutar(ts);
+
+                
 
                 //inicio del caso
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
@@ -73,7 +82,13 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             return r;
                         }
-                        else if (r.t_val == Retorno.tipoRetorno.BREAK || r.t_val == Retorno.tipoRetorno.CONTINUE)
+                        else if (r.t_val == Retorno.tipoRetorno.BREAK)
+                        {
+                            //return r;
+                            string c1 = $"goto L{Convert.ToString(f1)};";
+                            Tres.Instance.agregarLinea(c1);
+                        }
+                        else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
                         {
                             return r;
                         }
@@ -91,6 +106,8 @@ namespace CompiPascalC3D.Instrucciones
                 }
             }
 
+            string c2 = $"L{Convert.ToString(f1)}:";
+            Tres.Instance.agregarLinea(c2);
 
 
             return null;

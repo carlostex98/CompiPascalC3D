@@ -62,7 +62,7 @@ namespace CompiPascalC3D.Instrucciones
             string a3 = $"goto L{Convert.ToString(t2x)};";
             string a4 = $"L{Convert.ToString(t1x)}:";
 
-            string a6 = $"L${Convert.ToString(t2x)}:";
+            string a6 = $"L{Convert.ToString(t2x)}:";
 
             Tres.Instance.agregarLinea(a1);
 
@@ -87,10 +87,13 @@ namespace CompiPascalC3D.Instrucciones
                     else if (r.t_val == Retorno.tipoRetorno.BREAK)
                     {
                         //relizar break
+                        string br = $"goto L{Convert.ToString(t2x)}; //break";
+                        Tres.Instance.agregarLinea(br);
                     }
                     else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
                     {
-                        break;
+                        string br = $"goto L{Convert.ToString(t0)}; //continue";
+                        Tres.Instance.agregarLinea(br);
                         //rompe el ciclo de instrucciones y vuelve a evaluar la condicion
                     }
                 }

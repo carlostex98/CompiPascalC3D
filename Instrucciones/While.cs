@@ -36,7 +36,7 @@ namespace CompiPascalC3D.Instrucciones
             {
                 throw new Error(linea, columna, "Se requiere una valor booleano", Error.Tipo_error.SEMANTICO);
             }
-            bool br = false;
+            
 
 
             int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
@@ -67,12 +67,18 @@ namespace CompiPascalC3D.Instrucciones
                     }
                     else if (r.t_val == Retorno.tipoRetorno.BREAK)
                     {
-                        br = true;
-                        break;
+                        //br = true;
+                        //break;
+                        string a33 = $"goto L{Convert.ToString(t2)}; //break";
+                        Tres.Instance.agregarLinea(a33);
+
                     }
                     else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
                     {
-                        break;
+                        //break;
+                        //ir al inicio
+                        string a33 = $"goto L{Convert.ToString(t0)}; //continue";
+                        Tres.Instance.agregarLinea(a33);
                     }
                 }
             }
