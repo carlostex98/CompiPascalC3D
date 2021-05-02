@@ -12,6 +12,7 @@ namespace CompiPascalC3D.TablaSimbolos
         public Dictionary<string, Simbolo> variables = new Dictionary<string, Simbolo>();
         public string especial = "";
         public int estructura = 0;
+        public int pos_ret = 0;
 
         public TSimbolo(TSimbolo ts = null)
         {

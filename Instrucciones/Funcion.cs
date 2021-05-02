@@ -39,7 +39,9 @@ namespace CompiPascalC3D.Instrucciones
             string a = $"void {nombre} ()" + "{ ";
             Tres.Instance.agregarLinea(a);
             TSimbolo local = new TSimbolo();
+
             local.estructura = 1; //le decimos que es en el heap jaja
+            local.pos_ret = Tres.Instance.contadorHeap;
 
             foreach (Declaracion vl in variables)
             {
@@ -55,8 +57,9 @@ namespace CompiPascalC3D.Instrucciones
             FuncionDato g = new FuncionDato(nombre, listaInstrucciones, variables, tipo, tret);
             g.referencia = local;
             Maestro.Instance.guardarFuncion(nombre, g);
+            Tres.Instance.agregarLinea("}");
 
-
+            local.estructura = 0;
             return null;
         }
 

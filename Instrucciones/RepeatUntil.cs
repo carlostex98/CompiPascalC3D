@@ -57,10 +57,12 @@ namespace CompiPascalC3D.Instrucciones
                 }
             }
 
+            Tres.Instance.agregarLinea("//inicio c");
             Primitivo p = (Primitivo)condicion.ejecutar(tablaLocal);
+            Tres.Instance.agregarLinea("//fin c");
             string a1 = $"if({p.valor} >= 1)" + "{" + $" goto L{a};" + "}";
             string a3 = $"goto L{Convert.ToString(b)};";
-            string a6 = $"L${Convert.ToString(b)}:";
+            string a6 = $"L{Convert.ToString(b)}:";
 
             Tres.Instance.agregarLinea(a1);
             Tres.Instance.agregarLinea(a3);

@@ -45,7 +45,7 @@ namespace CompiPascalC3D.Instrucciones
             string a3 = $"goto L{Convert.ToString(t2)};";
             string a4 = $"L{Convert.ToString(t1)}:";
 
-            string a6 = $"L${Convert.ToString(t2)}:";
+            string a6 = $"L{Convert.ToString(t2)}:";
 
             Tres.Instance.agregarLinea(a1);
 

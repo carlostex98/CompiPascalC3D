@@ -291,19 +291,24 @@ namespace CompiPascalC3D.Instrucciones
 
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} > {b.valor})" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -321,19 +326,24 @@ namespace CompiPascalC3D.Instrucciones
 
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} < {b.valor})" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -351,19 +361,24 @@ namespace CompiPascalC3D.Instrucciones
 
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} >= {b.valor})" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -381,19 +396,24 @@ namespace CompiPascalC3D.Instrucciones
 
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} <= {b.valor})" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -409,26 +429,34 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no booleano: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
+
+                
+
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
-
                 string ax = $"T${Convert.ToString(t)} = {a.valor} + {b.valor};";
-
-                string a1 = $"if(T{Convert.ToString(t)} >= 1)" + "{" + $" goto L{t1};" + "}";
+                string a1 = $"if({a.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(ax);
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
+
+                
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
             else if (tipo == Tipo_operacion.YY)
@@ -445,23 +473,26 @@ namespace CompiPascalC3D.Instrucciones
 
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
-
-                string ax = $"T{Convert.ToString(t)} = {a.valor} * {b.valor};";
-
-                string a1 = $"if(T{Convert.ToString(t)} >= 1)" + "{" + $" goto L{t1};" + "}";
+                string ax = $"T${Convert.ToString(t)} = {a.valor} * {b.valor};";
+                string a1 = $"if({a.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(ax);
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -470,20 +501,24 @@ namespace CompiPascalC3D.Instrucciones
                 //TODO coso del if
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} == {b.valor})" + "{" + $" goto L{t1};" + "}";
+                string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
-                string a2 = $"T{Convert.ToString(t)} = 0;";
-
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
             }
@@ -494,20 +529,24 @@ namespace CompiPascalC3D.Instrucciones
 
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
+                int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
                 string a1 = $"if({a.valor} != {b.valor})" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
                 string a4 = $"L{Convert.ToString(t1)}:";
                 string a5 = $"T{Convert.ToString(t)} = 1;";
+                string a55 = $"goto L{Convert.ToString(t3)};";
                 string a6 = $"L{Convert.ToString(t2)}:";
-
+                string a7 = $"L{t3}:";
                 Tres.Instance.agregarLinea(a1);
                 Tres.Instance.agregarLinea(a3);
                 Tres.Instance.agregarLinea(a4);
                 Tres.Instance.agregarLinea(a5);
+                Tres.Instance.agregarLinea(a55);
                 Tres.Instance.agregarLinea(a6);
                 Tres.Instance.agregarLinea(a2);
+                Tres.Instance.agregarLinea(a7);
 
                 return new Primitivo(Primitivo.tipo_val.BOOLEANO, "T" + Convert.ToString(t));
 

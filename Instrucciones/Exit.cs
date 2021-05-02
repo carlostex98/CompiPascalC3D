@@ -23,6 +23,7 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
+            Tres.Instance.agregarLinea("//el exit");
             Primitivo e = (Primitivo)this.op.ejecutar(ts);
 
             return new Retorno(Retorno.tipoRetorno.EXIT, e);

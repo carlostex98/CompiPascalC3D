@@ -48,10 +48,12 @@ namespace CompiPascalC3D.Instrucciones
             {
                 Asignacion x = new Asignacion(t.Key, arr[i], linea, columna);
                 i++;
+                x.ejecutar(ts);
             }
-            
 
-            return null;
+            return new Primitivo(Primitivo.tipo_val.INT, "TN");
+
+            //return null;
         }
 
     }

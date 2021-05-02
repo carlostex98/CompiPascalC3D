@@ -39,7 +39,7 @@ namespace CompiPascalC3D.Instrucciones
             }
             else
             {
-                a = $"T{Convert.ToString(x)} = stack[{Convert.ToString(s.dirHeap)}];";
+                a = $"T{Convert.ToString(x)} = heap[{Convert.ToString(s.dirHeap)}];";
             }
             Tres.Instance.agregarLinea(a);
 
@@ -55,7 +55,7 @@ namespace CompiPascalC3D.Instrucciones
                     break;
 
                 case Simbolo.tipo.INTEGER:
-                    tpx = Primitivo.tipo_val.CADENA;
+                    tpx = Primitivo.tipo_val.INT;
                     break;
 
                 case Simbolo.tipo.REAL:

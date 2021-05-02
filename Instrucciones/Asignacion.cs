@@ -86,7 +86,7 @@ namespace CompiPascalC3D.Instrucciones
                 }
                 else
                 {
-                    a = $"stack[{Convert.ToString(s.dirHeap)}] = {e.valor};";
+                    a = $"heap[{Convert.ToString(s.dirHeap)}] = {e.valor};";
                     b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirHeap)}";
                 }
                 Tres.Instance.agregarLinea(b);
