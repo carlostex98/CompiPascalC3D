@@ -82,15 +82,41 @@ namespace CompiPascalC3D.Instrucciones
                 if (s.locacion == 0)
                 {
                     a = $"stack[{Convert.ToString(s.dirStack)}] = {e.valor};";
-                    b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirStack)}";
+                    Tres.Instance.agregarLinea(a);
+                    // b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirStack)}";
                 }
                 else
                 {
-                    a = $"heap[{Convert.ToString(s.dirHeap)}] = {e.valor};";
-                    b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirHeap)}";
+                    /*
+                    aqui se calcula la diferncia entre la pos actual del contador y la reportada por el chungo 
+                    se maneja por dir heap pero es el stack xd
+                     */
+
+                    int mx = Tres.Instance.accederRelativo() - s.dirHeap;
+                    if (mx==0)
+                    {
+                        //no necesita calculo
+                        
+                        a = $"stack[SP] = {e.valor};";
+                        Tres.Instance.agregarLinea(a);
+                        //b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirHeap)}";
+                    }
+                    else
+                    {
+                        //aqui la diferencia es que queremos acceder a una variable que nos está en la misma posicion del puntero
+                        int tmp = Tres.Instance.obtenerTemporal();
+                        b = $"T{Convert.ToString(tmp)} = {Tres.Instance.accederRelativo()} - {s.dirHeap};";
+                        Tres.Instance.agregarLinea(b);
+
+                        a = $"stack[T{Convert.ToString(tmp)}] = {e.valor};";
+                        Tres.Instance.agregarLinea(a);
+
+                    }
+
+                    
                 }
-                Tres.Instance.agregarLinea(b);
-                Tres.Instance.agregarLinea(a);
+                
+                
 
                 /*bool x = ts.esEspecial(id);
 

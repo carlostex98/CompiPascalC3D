@@ -80,10 +80,15 @@ namespace CompiPascalC3D.Instrucciones
                         }
                         else
                         {
-                            dir = Tres.Instance.nuevoHeap();
-                            Tres.Instance.agregarLinea("HP = HP + 1;");
-                            string a = $"heap[HP] = 0;";
-                            Tres.Instance.agregarLinea(a);
+
+                            //en este caso no se aumenta el contador del heap
+
+                            dir = Tres.Instance.nuevo_relativo();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
+                            //Tres.Instance.agregarLinea("HP = HP + 1;");
+                            //string a = $"heap[HP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                         }
 
 
@@ -106,10 +111,11 @@ namespace CompiPascalC3D.Instrucciones
                         }
                         else
                         {
-                            dir = Tres.Instance.nuevoHeap();
-                            Tres.Instance.agregarLinea("HP = HP + 1;");
-                            string a = $"heap[HP] = 0;";
-                            Tres.Instance.agregarLinea(a);
+                            dir = Tres.Instance.nuevo_relativo();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
+                            //string a = $"heap[HP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                         }
 
 
@@ -136,10 +142,11 @@ namespace CompiPascalC3D.Instrucciones
                         }
                         else
                         {
-                            dir = Tres.Instance.nuevoHeap();
-                            Tres.Instance.agregarLinea("HP = HP + 1;");
-                            string a = $"heap[HP] = 0;";
-                            Tres.Instance.agregarLinea(a);
+                            dir = Tres.Instance.nuevo_relativo();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
+                            //string a = $"heap[HP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                         }
 
 
@@ -213,13 +220,15 @@ namespace CompiPascalC3D.Instrucciones
                         }
                         else
                         {
-                            dir = Tres.Instance.nuevoHeap();
-                            Tres.Instance.agregarLinea("HP = HP + 1;");
-                            string a = $"heap[HP] = {valor.valor};";
-                            Tres.Instance.agregarLinea(a);
+                            dir = Tres.Instance.nuevo_relativo();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
+                            
+                            //string a = $"heap[HP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                         }
 
-                        
+
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
 
                         Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
@@ -247,10 +256,11 @@ namespace CompiPascalC3D.Instrucciones
                         }
                         else
                         {
-                            dir = Tres.Instance.nuevoHeap();
-                            Tres.Instance.agregarLinea("HP = HP + 1;");
-                            string a = $"heap[HP] = {valor.valor};";
-                            Tres.Instance.agregarLinea(a);
+                            dir = Tres.Instance.nuevo_relativo();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
+                            //string a = $"heap[HP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                         }
 
 
@@ -282,10 +292,11 @@ namespace CompiPascalC3D.Instrucciones
                         }
                         else
                         {
-                            dir = Tres.Instance.nuevoHeap();
-                            Tres.Instance.agregarLinea("HP = HP + 1;");
-                            string a = $"heap[HP] = {valor.valor};";
-                            Tres.Instance.agregarLinea(a);
+                            dir = Tres.Instance.nuevo_relativo();
+                            Tres.Instance.agregarLinea("SP = SP + 1;");
+                            Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
+                            //string a = $"heap[HP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                         }
 
 

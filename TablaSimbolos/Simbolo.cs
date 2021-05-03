@@ -25,6 +25,7 @@ namespace CompiPascalC3D.TablaSimbolos
         public int dirStack;
         public int dirHeap;//solo para las funciones y strings
         public int locacion = 0; // 0 heap, 1 stack
+        public int dir_rel = 0;
 
 
         public Simbolo(tipo t, int v, int tp)

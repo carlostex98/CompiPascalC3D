@@ -25,9 +25,18 @@ namespace CompiPascalC3D.Instrucciones
         {
             Tres.Instance.agregarLinea("//el exit");
             Primitivo e = (Primitivo)this.op.ejecutar(ts);
-
-            return new Retorno(Retorno.tipoRetorno.EXIT, e);
-            
+            //luego de calcular el valor es necesario asignar a la posicion numero
+            int x = Tres.Instance.accederRelativo();
+            int y = Tres.Instance.obtenerTemporal();
+            string a = $"T{Convert.ToString(y)} = HP - {Convert.ToString(x)};";
+            Tres.Instance.agregarLinea(a);
+            string b = $"stack[T{Convert.ToString(y)}] = {e.valor}";
+            Tres.Instance.agregarLinea(b);
+            Tres.Instance.agregarLinea("return;");
+            //return new Retorno(Retorno.tipoRetorno.EXIT, e);
+            //ya no se usa el retorno como tal debido que no se necesita que se detenga la traduccuin
+            //en se añade una linea a modo de codigo para el retorno de C
+            return null;
         }
 
 

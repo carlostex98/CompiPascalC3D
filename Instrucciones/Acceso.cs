@@ -39,9 +39,37 @@ namespace CompiPascalC3D.Instrucciones
             }
             else
             {
-                a = $"T{Convert.ToString(x)} = heap[{Convert.ToString(s.dirHeap)}];";
+                //es de funcion por lo tanto hay que calcular la posicion :)
+                //en base a la relativa y a la actual
+
+
+
+                int mx = Tres.Instance.accederRelativo() - s.dirHeap;
+                if (mx == 0)
+                {
+                    //no necesita calculo
+
+                    a = $"T{Convert.ToString(x)} = heap[SP];";
+                    Tres.Instance.agregarLinea(a);
+                    //b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirHeap)}";
+                }
+                else
+                {
+                    string b;
+                    //aqui la diferencia es que queremos acceder a una variable que nos está en la misma posicion del puntero
+                    int tmp = Tres.Instance.obtenerTemporal();
+                    b = $"T{Convert.ToString(tmp)} = {Tres.Instance.accederRelativo()} - {s.dirHeap};";
+                    Tres.Instance.agregarLinea(b);
+
+                    a = $"T{Convert.ToString(x)} = heap[T{Convert.ToString(tmp)}];";
+                    Tres.Instance.agregarLinea(a);
+
+                }
+
+
+                
             }
-            Tres.Instance.agregarLinea(a);
+            //Tres.Instance.agregarLinea(a);
 
             Primitivo.tipo_val tpx = Primitivo.tipo_val.CADENA;
             switch (s.Tipo)

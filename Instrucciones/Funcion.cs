@@ -41,7 +41,8 @@ namespace CompiPascalC3D.Instrucciones
             TSimbolo local = new TSimbolo();
 
             local.estructura = 1; //le decimos que es en el heap jaja
-            local.pos_ret = Tres.Instance.contadorHeap;
+            Tres.Instance.resetRelativo();
+            //local.pos_ret = Tres.Instance.contadorHeap;
 
             foreach (Declaracion vl in variables)
             {
@@ -60,6 +61,7 @@ namespace CompiPascalC3D.Instrucciones
             Tres.Instance.agregarLinea("}");
 
             local.estructura = 0;
+            Tres.Instance.resetRelativo();
             return null;
         }
 

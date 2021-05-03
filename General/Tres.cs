@@ -23,6 +23,8 @@ namespace CompiPascalC3D.General
         public LinkedList<string> codigo = new LinkedList<string>();
         public LinkedList<string[]> reglas = new LinkedList<string[]>();
 
+        public int contador_relativo=0;
+
         /*
          
         en el stack se guardan las variables: int, real, boolean
@@ -46,6 +48,23 @@ namespace CompiPascalC3D.General
             {
                 return instance;
             }
+        }
+
+
+        public void resetRelativo()
+        {
+            this.contador_relativo = 0;
+        }
+
+        public int nuevo_relativo()
+        {
+            contador_relativo++;
+            return contador_relativo;
+        }
+
+        public int accederRelativo()
+        {
+            return contador_relativo;
         }
 
 
