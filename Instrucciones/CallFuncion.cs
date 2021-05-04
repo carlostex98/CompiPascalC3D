@@ -35,7 +35,43 @@ namespace CompiPascalC3D.Instrucciones
 
             Operacion[] arr = new Operacion[this.parametros.Count];
 
-            int i = 0;
+            int cant_vars = f.referencia.variables.Count; //cantidad de variables de tipo parametro en la funcion
+
+            if (cant_vars != parametros.Count)
+            {
+                //se mandó a llamar con mas o menos valores de los que la funcion requiere
+                throw new Error(linea, columna, "Funcion: " + nombre + ", cantidad de parametros no coinciden", Error.Tipo_error.SINTACTICO);
+            }
+
+
+            int tml = Tres.Instance.obtenerTemporal();
+            string s1 = $"T{Convert.ToString(tml)} = SP;";//Se le asigna al temporal la pos actual
+            string s2 = $"T{Convert.ToString(tml)} = T{Convert.ToString(tml)} + 1;";//aumentamos uno debido al return
+            Tres.Instance.agregarLinea(s1);
+            Tres.Instance.agregarLinea(s2);
+
+            foreach (Operacion t in this.parametros)
+            {
+                Primitivo n = (Primitivo)t.ejecutar(ts);
+                string t1 = $"stack[T{Convert.ToString(tml)}] = {n.valor}";
+                Tres.Instance.agregarLinea(t1);
+                Tres.Instance.agregarLinea(s2);
+
+            }
+
+            //se llama a la funcion
+            Tres.Instance.agregarLinea($"{nombre}();");
+
+
+            //ahora el coso de retorno
+            int reto = Tres.Instance.obtenerTemporal();
+            string pmx = $"T{Convert.ToString(reto)} = stack[SP];";
+            Tres.Instance.agregarLinea(pmx);
+
+
+
+
+            /*int i = 0;
             foreach (Operacion t in this.parametros)
             {
                 
@@ -49,9 +85,9 @@ namespace CompiPascalC3D.Instrucciones
                 Asignacion x = new Asignacion(t.Key, arr[i], linea, columna);
                 i++;
                 x.ejecutar(ts);
-            }
+            }*/
 
-            return new Primitivo(Primitivo.tipo_val.INT, "TN");
+            return new Primitivo(Primitivo.tipo_val.INT, $"T{Convert.ToString(reto)}");
 
             //return null;
         }

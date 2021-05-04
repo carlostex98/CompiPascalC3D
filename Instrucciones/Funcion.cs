@@ -54,9 +54,12 @@ namespace CompiPascalC3D.Instrucciones
                 ins.ejecutar(local);
             }
 
+            string rel = $"SP = SP - {Tres.Instance.accederRelativo()}";
+            Tres.Instance.agregarLinea(rel);
+
 
             FuncionDato g = new FuncionDato(nombre, listaInstrucciones, variables, tipo, tret);
-            g.referencia = local;
+            g.referencia = local; 
             Maestro.Instance.guardarFuncion(nombre, g);
             Tres.Instance.agregarLinea("}");
 

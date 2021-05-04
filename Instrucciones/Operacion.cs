@@ -101,8 +101,8 @@ namespace CompiPascalC3D.Instrucciones
             if (tipo == Tipo_operacion.FUNCION_RETORNO)
             {
                 //Primitivo p = (Primitivo)acc.ejecutar(ts);
-                Retorno n = (Retorno)func.ejecutar(ts);
-                return (Primitivo)n.valor;
+                Primitivo n = (Primitivo)func.ejecutar(ts);
+                return n;
             }
 
 

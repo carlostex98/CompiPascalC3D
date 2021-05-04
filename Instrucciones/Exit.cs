@@ -28,10 +28,14 @@ namespace CompiPascalC3D.Instrucciones
             //luego de calcular el valor es necesario asignar a la posicion numero
             int x = Tres.Instance.accederRelativo();
             int y = Tres.Instance.obtenerTemporal();
-            string a = $"T{Convert.ToString(y)} = HP - {Convert.ToString(x)};";
+            string a = $"T{Convert.ToString(y)} = SP - {Convert.ToString(x)};";
             Tres.Instance.agregarLinea(a);
             string b = $"stack[T{Convert.ToString(y)}] = {e.valor}";
             Tres.Instance.agregarLinea(b);
+
+            string rel = $"SP = SP - {Tres.Instance.accederRelativo()}";
+            Tres.Instance.agregarLinea(rel);
+
             Tres.Instance.agregarLinea("return;");
             //return new Retorno(Retorno.tipoRetorno.EXIT, e);
             //ya no se usa el retorno como tal debido que no se necesita que se detenga la traduccuin

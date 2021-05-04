@@ -91,6 +91,7 @@ namespace CompiPascalC3D.Instrucciones
                     break;
             }
 
+            Tres.Instance.agregarLinea("//fin de acceso");
             Primitivo p = new Primitivo(tpx, $"T{Convert.ToString(x)}");
 
             return p;
