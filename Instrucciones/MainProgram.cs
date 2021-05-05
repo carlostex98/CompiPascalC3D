@@ -23,8 +23,11 @@ namespace CompiPascalC3D.Instrucciones
         public Object ejecutar(TSimbolo ts)
         {
             TSimbolo tablaLocal = new TSimbolo(ts);
+            Tres.Instance.agregarLinea("int main(){");
             foreach (Instruccion ins in listaInstrucciones)
             {
+
+                
 
                 try
                 {
@@ -46,6 +49,9 @@ namespace CompiPascalC3D.Instrucciones
 
                
             }
+
+            Tres.Instance.agregarLinea("return 0;");
+            Tres.Instance.agregarLinea("}");
 
             return null;
         }

@@ -137,7 +137,39 @@ namespace CompiPascalC3D.General
         }
 
 
+        public int obtenerHeap()
+        {
+            return contadorHeap;
+        }
 
+        public void aumentarHeap(int t)
+        {
+            contadorHeap = contadorHeap + t;
+        }
+
+
+        public string devolverFullCodigo()
+        {
+
+            string a = "#include <stdio.h>\n";
+            string b = "float heap[10000];\n";
+            string c = "float stack[10000];\n";
+            string d = "float SP;\n";
+            string e = "float HP;\n";
+
+            string mx = "float ";
+            for (int i = 0; i < contadorTemporal; i++)
+            {
+                mx = mx + $"T{i}, ";
+            }
+            mx = mx + $"T{contadorTemporal};\n";
+
+            mx = mx + devolver_codigo();
+
+            string f = a + b + c + d + e + mx;
+
+            return f;
+        }
 
     }
 }

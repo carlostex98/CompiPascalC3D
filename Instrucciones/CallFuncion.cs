@@ -25,6 +25,9 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
+
+            Tres.Instance.agregarLinea("//llamada a funcion");
+
             bool ss = Maestro.Instance.verificarFuncion(this.nombre);
             if (!ss)
             {
@@ -53,7 +56,7 @@ namespace CompiPascalC3D.Instrucciones
             foreach (Operacion t in this.parametros)
             {
                 Primitivo n = (Primitivo)t.ejecutar(ts);
-                string t1 = $"stack[T{Convert.ToString(tml)}] = {n.valor}";
+                string t1 = $"stack[(int)T{Convert.ToString(tml)}] = {n.valor};";
                 Tres.Instance.agregarLinea(t1);
                 Tres.Instance.agregarLinea(s2);
 
@@ -65,7 +68,7 @@ namespace CompiPascalC3D.Instrucciones
 
             //ahora el coso de retorno
             int reto = Tres.Instance.obtenerTemporal();
-            string pmx = $"T{Convert.ToString(reto)} = stack[SP];";
+            string pmx = $"T{Convert.ToString(reto)} = stack[(int)SP];";
             Tres.Instance.agregarLinea(pmx);
 
 

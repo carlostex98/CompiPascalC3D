@@ -31,7 +31,8 @@ namespace CompiPascalC3D
             Tres.Instance.limpiar();
             CGramatica eval = new CGramatica();
             eval.analizar_arbol(entrada.Text);
-            salida.Text = Tres.Instance.devolver_codigo();
+
+            salida.Text = Tres.Instance.devolverFullCodigo();
 
         }
     }

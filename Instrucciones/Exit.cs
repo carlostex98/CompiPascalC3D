@@ -30,10 +30,10 @@ namespace CompiPascalC3D.Instrucciones
             int y = Tres.Instance.obtenerTemporal();
             string a = $"T{Convert.ToString(y)} = SP - {Convert.ToString(x)};";
             Tres.Instance.agregarLinea(a);
-            string b = $"stack[T{Convert.ToString(y)}] = {e.valor}";
+            string b = $"stack[(int)T{Convert.ToString(y)}] = {e.valor};";
             Tres.Instance.agregarLinea(b);
 
-            string rel = $"SP = SP - {Tres.Instance.accederRelativo()}";
+            string rel = $"SP = SP - {Tres.Instance.accederRelativo()};";
             Tres.Instance.agregarLinea(rel);
 
             Tres.Instance.agregarLinea("return;");

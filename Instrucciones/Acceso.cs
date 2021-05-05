@@ -35,7 +35,7 @@ namespace CompiPascalC3D.Instrucciones
 
             if (s.locacion == 0)
             {
-                a = $"T{Convert.ToString(x)} = stack[{Convert.ToString(s.dirStack)}];";
+                a = $"T{Convert.ToString(x)} = stack[(int){Convert.ToString(s.dirStack)}];";
             }
             else
             {
@@ -49,7 +49,7 @@ namespace CompiPascalC3D.Instrucciones
                 {
                     //no necesita calculo
 
-                    a = $"T{Convert.ToString(x)} = heap[SP];";
+                    a = $"T{Convert.ToString(x)} = stack[(int)SP];";
                     Tres.Instance.agregarLinea(a);
                     //b = $"T{Convert.ToString(x)} = {Convert.ToString(s.dirHeap)}";
                 }
@@ -61,7 +61,7 @@ namespace CompiPascalC3D.Instrucciones
                     b = $"T{Convert.ToString(tmp)} = {Tres.Instance.accederRelativo()} - {s.dirHeap};";
                     Tres.Instance.agregarLinea(b);
 
-                    a = $"T{Convert.ToString(x)} = heap[T{Convert.ToString(tmp)}];";
+                    a = $"T{Convert.ToString(x)} = stack[(int)T{Convert.ToString(tmp)}];";
                     Tres.Instance.agregarLinea(a);
 
                 }

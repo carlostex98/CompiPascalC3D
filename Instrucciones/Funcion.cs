@@ -35,7 +35,9 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
-            //se guarda en la singleton
+            FuncionDato g = new FuncionDato(nombre, listaInstrucciones, variables, tipo, tret);
+            Maestro.Instance.guardarFuncion(nombre, g);
+            
             string a = $"void {nombre} ()" + "{ ";
             Tres.Instance.agregarLinea(a);
             TSimbolo local = new TSimbolo();
@@ -48,19 +50,20 @@ namespace CompiPascalC3D.Instrucciones
             {
                 vl.ejecutar(local);
             }
+            g.referencia = local;
 
             foreach (Instruccion ins in listaInstrucciones)
             {
                 ins.ejecutar(local);
             }
 
-            string rel = $"SP = SP - {Tres.Instance.accederRelativo()}";
+            string rel = $"SP = SP - {Tres.Instance.accederRelativo()};";
             Tres.Instance.agregarLinea(rel);
 
 
-            FuncionDato g = new FuncionDato(nombre, listaInstrucciones, variables, tipo, tret);
-            g.referencia = local; 
-            Maestro.Instance.guardarFuncion(nombre, g);
+            
+            
+            
             Tres.Instance.agregarLinea("}");
 
             local.estructura = 0;

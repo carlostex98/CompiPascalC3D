@@ -30,7 +30,7 @@ namespace CompiPascalC3D.Instrucciones
                 Primitivo x = (Primitivo)cc.ejecutar(ts);
 
                 //Maestro.Instance.addOutput(x.valor.ToString());
-                Tres.Instance.agregarLinea($"printf(\"%d\"  (int){x.valor});");
+                Tres.Instance.agregarLinea($"printf(\"%d\",  (int){x.valor});");
                 //System.Diagnostics.Debug.WriteLine(x.valor.ToString());
             }
 

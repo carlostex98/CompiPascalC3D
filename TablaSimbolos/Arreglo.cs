@@ -6,8 +6,9 @@ namespace CompiPascalC3D.TablaSimbolos
 {
     public class Arreglo
     {
-        LinkedList<Simbolo> valores = new LinkedList<Simbolo>();
-        LinkedList<int> dimensiones = new LinkedList<int>();
+        public int tamaño;
+        public LinkedList<int> dimensiones = new LinkedList<int>();
+        public int inicioHeap;
 
         public Arreglo()
         {
@@ -18,6 +19,13 @@ namespace CompiPascalC3D.TablaSimbolos
         {
             //en base a las dimensiones se setan 
         }
+
+
+        public LinkedList<int> retornarDimensiones()
+        {
+            return dimensiones;
+        }
+
 
 
     }

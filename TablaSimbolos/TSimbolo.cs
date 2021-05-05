@@ -10,6 +10,7 @@ namespace CompiPascalC3D.TablaSimbolos
     {
         public TSimbolo heredado;
         public Dictionary<string, Simbolo> variables = new Dictionary<string, Simbolo>();
+        public Dictionary<string, Arreglo> arreglos = new Dictionary<string, Arreglo>();
         public string especial = "";
         public int estructura = 0;
         public int pos_ret = 0;
@@ -31,6 +32,61 @@ namespace CompiPascalC3D.TablaSimbolos
             }
 
         }
+
+
+        public bool existeArreglo(string nombre)
+        {
+            TSimbolo aux = this;
+            while (aux != null)
+            {
+                if (this.variables.ContainsKey(nombre) || this.arreglos.ContainsKey(nombre))
+                {
+                    return true;
+                }
+                aux = aux.heredado;
+            }
+            return false;
+
+        }
+
+        public bool existeArregloSolo(string nombre)
+        {
+            TSimbolo aux = this;
+            while (aux != null)
+            {
+                if (this.arreglos.ContainsKey(nombre))
+                {
+                    return true;
+                }
+                aux = aux.heredado;
+            }
+            return false;
+
+        }
+
+        public Arreglo GetArreglo(string nombre)
+        {
+            TSimbolo aux = this;
+            while (aux != null)
+            {
+                if (this.arreglos.ContainsKey(nombre))
+                {
+                    return arreglos[nombre];
+                }
+                aux = aux.heredado;
+            }
+            return null;
+        }
+
+
+        public void agregarArreglo(string nombre, Arreglo arr)
+        {
+            arreglos.Add(nombre, arr);
+        }
+
+
+
+
 
 
         public bool agregar(string nombre, Simbolo sb)
