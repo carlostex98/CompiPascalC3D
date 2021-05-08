@@ -6,17 +6,18 @@ using CompiPascalC3D.General;
 
 namespace CompiPascalC3D.Instrucciones
 {
-    public class AccesoArreglo : Instruccion
+    class AsignacionArreglo:Instruccion
     {
+
         string nombre;
         LinkedList<Operacion> op = new LinkedList<Operacion>();
-
-        public AccesoArreglo(string nombre, LinkedList<Operacion> parametros)
+        Operacion valor;
+        public AsignacionArreglo(string nombre, LinkedList<Operacion> parametros, Operacion val)
         {
             this.nombre = nombre;
             this.op = parametros;
+            this.valor = val;
         }
-
 
         public Object ejecutar(TSimbolo ts)
         {
@@ -78,6 +79,7 @@ namespace CompiPascalC3D.Instrucciones
                 Tres.Instance.agregarLinea(bx);
             }
 
+            Primitivo ss = (Primitivo)valor.ejecutar(ts);
 
             int mx1 = Tres.Instance.obtenerTemporal();
             int mx2 = Tres.Instance.obtenerTemporal();
@@ -85,17 +87,21 @@ namespace CompiPascalC3D.Instrucciones
             string z1 = $"T{Convert.ToString(mx1)} = HP - {Convert.ToString(aux.inicioHeap)};";
             string z2 = $"T{Convert.ToString(mx2)} = HP - {Convert.ToString(mx1)};";
             string z3 = $"T{Convert.ToString(mx2)} = T{Convert.ToString(mx2)} + {Convert.ToString(mx)};";
-            string z4 = $"T{Convert.ToString(mx3)} = heap[T{Convert.ToString(mx2)}];";
+            string z4 = $"heap[T{Convert.ToString(mx2)}] == {ss.valor};";
             Tres.Instance.agregarLinea(z1);
             Tres.Instance.agregarLinea(z2);
             Tres.Instance.agregarLinea(z3);
             Tres.Instance.agregarLinea(z4);
 
-            return new Primitivo(Primitivo.tipo_val.INT, $"T{Convert.ToString(mx3)}");
+            //return new Primitivo(Primitivo.tipo_val.INT, $"T{Convert.ToString(mx3)}");
 
 
-           
+            //se genran los multiplicadores en base a las operaciones
+
+            //retornamos el valor en forma de temporal
+
+
+            return null;
         }
-
     }
 }

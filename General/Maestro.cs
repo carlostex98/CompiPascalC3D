@@ -43,10 +43,10 @@ namespace CompiPascalC3D.General
             return this.simbolos;
         }
 
-        public void agrgarSimbolo(string a, string b, string c, string d)
+        public void agrgarSimbolo(string a, string b, string c, string d, string ex)
         {
 
-            string[] e = { a, b, c, d };
+            string[] e = { a, b, c, d, ex };
 
             this.simbolos.AddLast(e);
         }

@@ -52,7 +52,32 @@ namespace CompiPascalC3D.Analizador
                 this.evaluarInstrucciones(raiz_grogram.ChildNodes[0]);
 
                 TSimbolo global = new TSimbolo(null);
+                global.contexto = "Global";
                 //mandar a llamar ejecutar con try catch
+
+                /* generamos una funcion especial para imprimir strings */
+                LinkedList<string> esp = new LinkedList<string>();
+                esp.AddLast("void imprimeCadena() {");
+                int l0 = Tres.Instance.nuevaEtiqueta();
+                int l1 = Tres.Instance.nuevaEtiqueta();
+                int l2 = Tres.Instance.nuevaEtiqueta();
+                int t1 = Tres.Instance.obtenerTemporal();
+                esp.AddLast($"L{l0}:");
+                esp.AddLast($"T{t1} = heap[(int)HP];");
+                esp.AddLast($"if(T{t1} != -1)"+"{"+$" goto L{l1}; "+"}");
+                esp.AddLast($"goto L{l2}; ");
+                esp.AddLast($"L{l1}:");
+                esp.AddLast($"printf(\"%c\", (char)T{t1});");
+                esp.AddLast($"HP = HP + 1;");
+                esp.AddLast($"goto L{l0};");
+                esp.AddLast($"L{l2}:");
+                esp.AddLast("return;\n}");
+
+                foreach (string g in esp)
+                {
+                    Tres.Instance.agregarLinea(g);
+                }
+
 
                 foreach (Instruccion t in instrucciones_globales)
                 {

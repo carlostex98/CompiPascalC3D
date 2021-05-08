@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CompiPascalC3D.TablaSimbolos;
+using CompiPascalC3D.General;
 
 namespace CompiPascalC3D.Instrucciones
 {
@@ -19,7 +20,17 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
-            return new Retorno(Retorno.tipoRetorno.BREAK, null);
+            //return new Retorno(Retorno.tipoRetorno.BREAK, null);
+
+            if (ts.etiquetaBreak == -1)
+            {
+                //error
+            }
+            Tres.Instance.agregarComentario("etiqueta break");
+            Tres.Instance.agregarLinea($"goto L{ts.etiquetaBreak};");
+            
+
+            return null;
         }
 
     }

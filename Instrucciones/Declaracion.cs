@@ -47,7 +47,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = -1;";
+                            string a = $"stack[(int)SP] = -1;";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -62,7 +62,7 @@ namespace CompiPascalC3D.Instrucciones
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
 
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -75,7 +75,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = 0;";
+                            string a = $"stack[(int)SP] = 0;";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -91,9 +91,16 @@ namespace CompiPascalC3D.Instrucciones
                             //Tres.Instance.agregarLinea(a);
                         }
 
+                        
 
+                        
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        if (ts.estructura == 1)
+                        {
+                            int temp = Tres.Instance.obtenerTemporal();
+                            ex.temporal = temp;
+                        }
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -106,7 +113,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = 0;";
+                            string a = $"stack[(int)SP] = 0;";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -121,9 +128,13 @@ namespace CompiPascalC3D.Instrucciones
 
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
+                        if (ts.estructura == 1)
+                        {
+                            int temp = Tres.Instance.obtenerTemporal();
+                            ex.temporal = temp;
+                        }
 
-
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -137,7 +148,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = 0;";
+                            string a = $"stack[(int)SP] = 0;";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -151,8 +162,12 @@ namespace CompiPascalC3D.Instrucciones
 
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
-
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        if (ts.estructura == 1)
+                        {
+                            int temp = Tres.Instance.obtenerTemporal();
+                            ex.temporal = temp;
+                        }
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -181,7 +196,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = 0;";
+                            string a = $"stack[(int)SP] = 0;";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -195,7 +210,7 @@ namespace CompiPascalC3D.Instrucciones
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
 
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -215,7 +230,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = {valor.valor};";
+                            string a = $"stack[(int)SP] = {valor.valor};";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -230,8 +245,12 @@ namespace CompiPascalC3D.Instrucciones
 
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
-
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        if (ts.estructura == 1)
+                        {
+                            int temp = Tres.Instance.obtenerTemporal();
+                            ex.temporal = temp;
+                        }
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -251,7 +270,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = {valor.valor};";
+                            string a = $"stack[(int)SP] = {valor.valor};";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -266,8 +285,12 @@ namespace CompiPascalC3D.Instrucciones
 
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
-
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        if (ts.estructura == 1)
+                        {
+                            int temp = Tres.Instance.obtenerTemporal();
+                            ex.temporal = temp;
+                        }
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }
@@ -287,7 +310,7 @@ namespace CompiPascalC3D.Instrucciones
                         {
                             dir = Tres.Instance.nuevoStack();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
-                            string a = $"stack[SP] = {valor.valor};";
+                            string a = $"stack[(int)SP] = {valor.valor};";
                             Tres.Instance.agregarLinea(a);
                         }
                         else
@@ -302,8 +325,12 @@ namespace CompiPascalC3D.Instrucciones
 
 
                         Simbolo ex = new Simbolo(tip, dir, ts.estructura);
-
-                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString());
+                        if (ts.estructura == 1)
+                        {
+                            int temp = Tres.Instance.obtenerTemporal();
+                            ex.temporal = temp;
+                        }
+                        Maestro.Instance.agrgarSimbolo(t, ex.Tipo.ToString(), linea.ToString(), columna.ToString(), ts.contexto);
                         ts.agregar(t, ex);
                     }
                 }

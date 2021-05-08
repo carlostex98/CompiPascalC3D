@@ -4,6 +4,7 @@ using System.Text;
 using Irony.Ast;
 using Irony.Parsing;
 using System.Text.RegularExpressions;
+using CompiPascalC3D.General;
 
 namespace CompiPascalC3D.Analizador
 {
@@ -128,6 +129,8 @@ namespace CompiPascalC3D.Analizador
                     //optimizamos REGLA 1
                     string res = $"goto {a}; \n{b}:";
                     //res += inst;
+                    Tres.Instance.agregarOptimizacion("Mirilla", "Regla 1", inst, "eliminacion", Convert.ToString(xx.Token.Location.Line));
+
 
                     return res;
                 }
@@ -147,11 +150,12 @@ namespace CompiPascalC3D.Analizador
                     {
                         //los valores son iguales
                         //regla 3 se usa el primer goto
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 3", "if(val==val){goto ln} goto lx", $"goto {s.ChildNodes[9].Token.ValueString}", Convert.ToString(s.ChildNodes[9].Token.Location.Line));
                         return $"goto {s.ChildNodes[9].Token.ValueString};\n";
                     }
                     //los valores no son iguales, se usa el segundo goto
                     //regla 4
-
+                    Tres.Instance.agregarOptimizacion("Mirilla", "Regla 4", "if(val==val){goto ln} goto lx", $"goto {s.ChildNodes[13].Token.ValueString}", Convert.ToString(s.ChildNodes[13].Token.Location.Line));
                     return $"goto {s.ChildNodes[13].Token.ValueString};\n";
 
                 }
@@ -230,26 +234,31 @@ namespace CompiPascalC3D.Analizador
                         if (simbolo == "+")
                         {
                             //regla 6
-                            return "d"; // le dice que esto se elimina
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 6", "Tn = Tn + 0;", "eliminada", Convert.ToString(a.Token.Location.Line));
+                            return "d"; // le dice que esto se elimina 
                         }
 
                         if (simbolo == "-")
                         {
                             //regla 7
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 7", "Tn = Tn - 0;", "eliminada", Convert.ToString(a.Token.Location.Line));
                             return "d";
                         }
 
                         if (simbolo == "/")
                         {
                             //regla 16
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 16", "Tn = 0 / Tx;", "Tn = 0", Convert.ToString(a.Token.Location.Line));
+                            return $"{ps.ChildNodes[0].Token.ValueString} = 0;";
                         }
 
                         if (simbolo == "*")
                         {
                             //regla 15
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 15", "Tn = 0 * Tx;", "Tn = 0", Convert.ToString(a.Token.Location.Line));
                             return $"{ps.ChildNodes[0].Token.ValueString} = 0";
                         }
-                        return $"{ps.ChildNodes[0].Token.ValueString} = {a.Token.ValueString} {psx.ChildNodes[1].Term.Name} {b.Token.ValueString}";
+                        return $"{ps.ChildNodes[0].Token.ValueString} = {a.Token.ValueString} {psx.ChildNodes[1].Term.Name} {b.Token.ValueString};";
                     }
 
                     if (x == 1)
@@ -259,10 +268,12 @@ namespace CompiPascalC3D.Analizador
                             if (ps.ChildNodes[0].Token.ValueString == b.Token.ValueString)
                             {
                                 //regla 8
+                                Tres.Instance.agregarOptimizacion("Bloque", "Regla 8", "Tn = Tn * 1;", "Eliminada", Convert.ToString(a.Token.Location.Line));
                                 return "d";
                             }
 
                             //regla 12
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 8", "Tn = Tm * 1;", "Tn = Tm", Convert.ToString(a.Token.Location.Line));
                             return $"{ps.ChildNodes[0].Token.ValueString} = {b.Token.ValueString}";
                         }
 
@@ -287,18 +298,21 @@ namespace CompiPascalC3D.Analizador
                         if (simbolo == "+")
                         {
                             //regla 6
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 6", "Tn = Tn + 0;", "eliminada", Convert.ToString(a.Token.Location.Line));
                             return "d"; // le dice que esto se elimina
                         }
 
                         if (simbolo == "-")
                         {
                             //regla 7
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 7", "Tn = Tn - 0;", "eliminada", Convert.ToString(a.Token.Location.Line));
                             return "d";
                         }
 
                         if (simbolo == "*")
                         {
                             //regla 15
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 15", "Tn = 0 * Tx;", "Tn = 0", Convert.ToString(a.Token.Location.Line));
                             return $"{ps.ChildNodes[0].Token.ValueString} = 0";
                         }
 
@@ -312,10 +326,12 @@ namespace CompiPascalC3D.Analizador
                             if (ps.ChildNodes[0].Token.ValueString == a.Token.ValueString)
                             {
                                 //regla 9
+                                Tres.Instance.agregarOptimizacion("Bloque", "Regla 9", "Tn = Tn / 1;", "Tn = 0", Convert.ToString(a.Token.Location.Line));
                                 return "d";
                             }
 
                             //regla 13
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 13", "Tn = Tm / 1;", "Tn = 0", Convert.ToString(a.Token.Location.Line));
                             return $"{ps.ChildNodes[0].Token.ValueString} = {a.Token.ValueString}";
 
                         }
@@ -325,11 +341,12 @@ namespace CompiPascalC3D.Analizador
                             if (ps.ChildNodes[0].Token.ValueString == a.Token.ValueString)
                             {
                                 //regla 8
+                                Tres.Instance.agregarOptimizacion("Bloque", "Regla 8", "Tn = Tn * 1;", "Eliminada", Convert.ToString(a.Token.Location.Line));
                                 return "d";
                             }
                             //no son iguales
 
-
+                            Tres.Instance.agregarOptimizacion("Bloque", "Regla 12", "Tn = Tm * 1;", "Eliminada", Convert.ToString(a.Token.Location.Line));
                             //regla 12
                             return $"{ps.ChildNodes[0].Token.ValueString} = {a.Token.ValueString}";
 
@@ -340,6 +357,7 @@ namespace CompiPascalC3D.Analizador
                     if(x == 2)
                     {
                         //regla 14
+                        Tres.Instance.agregarOptimizacion("Bloque", "Regla 14", "Tn = Tn * 1;", "Eliminada", Convert.ToString(a.Token.Location.Line));
                         return $"{ps.ChildNodes[0].Token.ValueString} = {a.Token.ValueString} + {a.Token.ValueString}";
                     }
 

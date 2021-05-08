@@ -23,7 +23,7 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
-            Tres.Instance.agregarLinea("//el exit");
+            Tres.Instance.agregarComentario("inicio exit");
             Primitivo e = (Primitivo)this.op.ejecutar(ts);
             //luego de calcular el valor es necesario asignar a la posicion numero
             int x = Tres.Instance.accederRelativo();
@@ -37,6 +37,7 @@ namespace CompiPascalC3D.Instrucciones
             Tres.Instance.agregarLinea(rel);
 
             Tres.Instance.agregarLinea("return;");
+            Tres.Instance.agregarComentario("fin exit");
             //return new Retorno(Retorno.tipoRetorno.EXIT, e);
             //ya no se usa el retorno como tal debido que no se necesita que se detenga la traduccuin
             //en se añade una linea a modo de codigo para el retorno de C

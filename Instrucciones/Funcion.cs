@@ -41,6 +41,8 @@ namespace CompiPascalC3D.Instrucciones
             string a = $"void {nombre} ()" + "{ ";
             Tres.Instance.agregarLinea(a);
             TSimbolo local = new TSimbolo();
+            local.contexto = $"Funcion {nombre}";
+            local.funcionEspecial = nombre;
 
             local.estructura = 1; //le decimos que es en el heap jaja
             Tres.Instance.resetRelativo();
@@ -68,6 +70,7 @@ namespace CompiPascalC3D.Instrucciones
 
             local.estructura = 0;
             Tres.Instance.resetRelativo();
+            local.funcionEspecial = "-1";
             return null;
         }
 

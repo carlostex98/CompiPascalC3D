@@ -73,6 +73,11 @@ namespace CompiPascalC3D.General
 
         }
 
+        public void aumentarHeap()
+        {
+            contadorHeap++;
+        }
+
 
         public void limpiar()
         {
@@ -169,6 +174,17 @@ namespace CompiPascalC3D.General
             string f = a + b + c + d + e + mx;
 
             return f;
+        }
+
+        public void agregarComentario(string m)
+        {
+            this.agregarLinea($"/***  {m}  ***/");
+        }
+
+        public void agregarOptimizacion(string tipo, string regla, string eliminado, string agregado, string fila)
+        {
+            string[] temp = { tipo, regla, eliminado, agregado, fila};
+            this.reglas.AddLast(temp);
         }
 
     }

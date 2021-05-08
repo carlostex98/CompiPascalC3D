@@ -48,10 +48,13 @@ namespace CompiPascalC3D.Instrucciones
             //Tres.Instance.agregarLinea(c1);
             //Tres.Instance.agregarLinea(c2);
 
+            local.etiquetaBreak = f1;
+
             foreach (Case t in casos)
             {
                 //recorremos los casos
                 TSimbolo tablalocal = new TSimbolo(ts);
+                tablalocal.contexto = "switch-case";
                 Primitivo i = (Primitivo)t.getOperacion().ejecutar(ts);
                 Operacion equiv = new Operacion( new Operacion(i), new Operacion(d), Operacion.Tipo_operacion.EQUIVALENCIA );
                 Primitivo p = (Primitivo)equiv.ejecutar(ts);
@@ -63,38 +66,22 @@ namespace CompiPascalC3D.Instrucciones
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
                 string a1 = $"if({p.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a3 = $"goto L{Convert.ToString(t2)};";
-                string a4 = $"L{Convert.ToString(t1)}:";
+                string a4 = $"L{Convert.ToString(t1)}:";//verdadero
 
-                string a6 = $"L${Convert.ToString(t2)}:";
+                string a6 = $"L{Convert.ToString(t2)}:";//falso
 
                 Tres.Instance.agregarLinea(a1);
 
-                Tres.Instance.agregarLinea(a3);
-                Tres.Instance.agregarLinea(a4);
+                Tres.Instance.agregarLinea(a3);//falso
+                Tres.Instance.agregarLinea(a4);//verdadero
                 //ejecutar instrucciones
                 foreach (Instruccion ins in t.getInstrucciones())
                 {
 
-                    Retorno r = (Retorno)ins.ejecutar(tablalocal);
-                    if (r != null)
-                    {
-                        if (r.t_val == Retorno.tipoRetorno.EXIT)
-                        {
-                            return r;
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.BREAK)
-                        {
-                            //return r;
-                            string c1 = $"goto L{Convert.ToString(f1)};";
-                            Tres.Instance.agregarLinea(c1);
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
-                        {
-                            return r;
-                        }
-
-                    }
+                    ins.ejecutar(tablalocal);
+                    
                 }
+                Tres.Instance.agregarLinea($"goto L{f1};");
                 Tres.Instance.agregarLinea(a6);
             }
 
@@ -104,6 +91,7 @@ namespace CompiPascalC3D.Instrucciones
                 {
                     s.ejecutar(local);
                 }
+                Tres.Instance.agregarLinea($"goto L{f1};");
             }
 
             string c2 = $"L{Convert.ToString(f1)}:";

@@ -18,6 +18,7 @@ namespace CompiPascalC3D.General
         }
 
         public tipo_val t_val;
+        public int pos;
 
         public Primitivo(tipo_val t, string valor)
         {

@@ -303,8 +303,8 @@ namespace CompiPascalC3D.Analizador
 
             if_then.Rule
                 = if_ + expresion + then_ + bloque_inst
-                | if_ + expresion + then_ + bloque_inst + else_ + bloque_inst
                 | if_ + expresion + then_ + bloque_inst + multi_else
+                | if_ + expresion + then_ + bloque_inst + else_ + bloque_inst
                 | if_ + expresion + then_ + bloque_inst + multi_else + else_ + bloque_inst
                 ;
 

@@ -26,7 +26,7 @@ namespace CompiPascalC3D.Instrucciones
         public Object ejecutar(TSimbolo ts)
         {
 
-            Tres.Instance.agregarLinea("//llamada a funcion");
+            Tres.Instance.agregarComentario("inicio llamada");
 
             bool ss = Maestro.Instance.verificarFuncion(this.nombre);
             if (!ss)
@@ -46,9 +46,10 @@ namespace CompiPascalC3D.Instrucciones
                 throw new Error(linea, columna, "Funcion: " + nombre + ", cantidad de parametros no coinciden", Error.Tipo_error.SINTACTICO);
             }
 
+            
 
             int tml = Tres.Instance.obtenerTemporal();
-            string s1 = $"T{Convert.ToString(tml)} = SP;";//Se le asigna al temporal la pos actual
+            string s1 = $"T{Convert.ToString(tml)} = SP + 1;";//Se le asigna al temporal la pos actual
             string s2 = $"T{Convert.ToString(tml)} = T{Convert.ToString(tml)} + 1;";//aumentamos uno debido al return
             Tres.Instance.agregarLinea(s1);
             Tres.Instance.agregarLinea(s2);
@@ -61,7 +62,7 @@ namespace CompiPascalC3D.Instrucciones
                 Tres.Instance.agregarLinea(s2);
 
             }
-
+            Tres.Instance.agregarLinea("SP = SP + 1;");
             //se llama a la funcion
             Tres.Instance.agregarLinea($"{nombre}();");
 
@@ -70,29 +71,30 @@ namespace CompiPascalC3D.Instrucciones
             int reto = Tres.Instance.obtenerTemporal();
             string pmx = $"T{Convert.ToString(reto)} = stack[(int)SP];";
             Tres.Instance.agregarLinea(pmx);
-
-
-
-
-            /*int i = 0;
-            foreach (Operacion t in this.parametros)
+            Tres.Instance.agregarLinea("SP = SP - 1;");
+            Tres.Instance.agregarComentario("fin llamada");
+            /*reasignacion de variables*/
+            if (ts.estructura == 1 && ts.funcionEspecial == nombre)
             {
-                
-                arr[i] = t;
-                i++;
+                Tres.Instance.agregarComentario("reasignacion temporales recursiva inicio");
+                //si y solo si estamos en una funcion y es una llamada recursiva
+                //restaurar los actuales
+                int xm = Tres.Instance.obtenerTemporal();
+                string s = $"T{Convert.ToString(xm)} = SP - {Convert.ToString(Tres.Instance.accederRelativo() - 1)};";
+                Tres.Instance.agregarLinea(s);
+                foreach (KeyValuePair<string, Simbolo> xx in f.referencia.variables)
+                {
+                    string g = $"T{xx.Value.temporal} = stack[(int)T{Convert.ToString(xm)}];";
+                    Tres.Instance.agregarLinea(g);
+                    Tres.Instance.agregarLinea($"T{Convert.ToString(xm)} = T{Convert.ToString(xm)} + 1;");
+                }
+                Tres.Instance.agregarComentario("reasignacion temporales recursiva fin");
             }
 
-            i = 0;
-            foreach (KeyValuePair<string, Simbolo> t in f.referencia.variables)
-            {
-                Asignacion x = new Asignacion(t.Key, arr[i], linea, columna);
-                i++;
-                x.ejecutar(ts);
-            }*/
-
+            
             return new Primitivo(Primitivo.tipo_val.INT, $"T{Convert.ToString(reto)}");
 
-            //return null;
+            
         }
 
     }

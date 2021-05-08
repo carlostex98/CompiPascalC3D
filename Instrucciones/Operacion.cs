@@ -436,7 +436,7 @@ namespace CompiPascalC3D.Instrucciones
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
                 int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
-                string ax = $"T${Convert.ToString(t)} = {a.valor} + {b.valor};";
+                string ax = $"T{Convert.ToString(t)} = {a.valor} + {b.valor};";
                 string a1 = $"if({a.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
@@ -475,7 +475,7 @@ namespace CompiPascalC3D.Instrucciones
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso
                 int t3 = Tres.Instance.nuevaEtiqueta();//salida en v
                 int t = Tres.Instance.obtenerTemporal(); // temporal de retorno
-                string ax = $"T${Convert.ToString(t)} = {a.valor} * {b.valor};";
+                string ax = $"T{Convert.ToString(t)} = {a.valor} * {b.valor};";
                 string a1 = $"if({a.valor} >= 1)" + "{" + $" goto L{t1};" + "}";
                 string a2 = $"T{Convert.ToString(t)} = 0;";
                 string a3 = $"goto L{Convert.ToString(t2)};";
@@ -557,6 +557,34 @@ namespace CompiPascalC3D.Instrucciones
             }
             else if (tipo == Tipo_operacion.UNICO)
             {
+
+
+                
+                if (a.t_val == Primitivo.tipo_val.CADENA)
+                {
+                    //hacemos uso del heap wuajajaj
+                    byte[] ult = Encoding.ASCII.GetBytes(a.valor);
+                    int mx = Tres.Instance.obtenerHeap();
+
+                    int tem = Tres.Instance.obtenerTemporal();
+                    string ax = $"T{tem} = HP;";
+                    Tres.Instance.agregarLinea(ax);
+
+                    for (int i = 0; i < ult.Length; i++)
+                    {
+                        string a1 = $"T{tem} = T{tem} + 1;";
+
+                        //string a1 = "HP = HP + 1;";
+                        Tres.Instance.agregarLinea(a1);
+                        Tres.Instance.aumentarHeap();
+                        string b1 = $"heap[(int)T{tem}] = {ult[i]};";
+                        Tres.Instance.agregarLinea(b1);
+                    }
+                    Tres.Instance.agregarLinea($"T{tem} = T{tem} + 1;");
+                    Tres.Instance.aumentarHeap();
+                    Tres.Instance.agregarLinea($"heap[(int)T{tem}] = -1;");
+                    return new Primitivo(a.t_val, Convert.ToString(mx + 1));
+                }
                 return new Primitivo(a.t_val, a.valor);
             }
             else

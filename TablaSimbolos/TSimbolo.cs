@@ -14,6 +14,10 @@ namespace CompiPascalC3D.TablaSimbolos
         public string especial = "";
         public int estructura = 0;
         public int pos_ret = 0;
+        public string funcionEspecial = "-1";
+        public string contexto = "";
+        public int etiquetaBreak = -1;
+        public int etiquetaContinue = -1;
 
         public TSimbolo(TSimbolo ts = null)
         {
@@ -26,6 +30,40 @@ namespace CompiPascalC3D.TablaSimbolos
                 if (aux.estructura == 1)
                 {
                     this.estructura = 1;
+                    break;
+                }
+                aux = aux.heredado;
+            }
+
+            aux = this.heredado;
+            while (aux != null)
+            {
+                if (aux.funcionEspecial != "-1")
+                {
+                    this.funcionEspecial = aux.funcionEspecial;
+                    break;
+                }
+                aux = aux.heredado;
+            }
+
+
+            aux = this.heredado;
+            while (aux != null)
+            {
+                if (aux.etiquetaBreak != -1)
+                {
+                    this.etiquetaBreak = aux.etiquetaBreak;
+                    break;
+                }
+                aux = aux.heredado;
+            }
+
+            aux = this.heredado;
+            while (aux != null)
+            {
+                if (aux.etiquetaContinue != -1)
+                {
+                    this.etiquetaContinue = aux.etiquetaContinue;
                     break;
                 }
                 aux = aux.heredado;

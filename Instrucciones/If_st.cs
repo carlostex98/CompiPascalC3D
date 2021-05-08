@@ -62,6 +62,7 @@ namespace CompiPascalC3D.Instrucciones
         {
             Primitivo condres = (Primitivo)condicion.ejecutar(ts);
             TSimbolo tablaLocal = new TSimbolo(ts);
+            tablaLocal.contexto = "if";
             if (condres.t_val != Primitivo.tipo_val.BOOLEANO)
             {
                 throw new Error(linea, columna, "Se requiere una valor booleano", Error.Tipo_error.SEMANTICO);
@@ -86,27 +87,15 @@ namespace CompiPascalC3D.Instrucciones
             //ejecutar instrucciones
             foreach (Instruccion ins in listaInstrucciones)
             {
-
-                Retorno r = (Retorno)ins.ejecutar(tablaLocal);
-                if (r != null)
-                {
-                    if (r.t_val == Retorno.tipoRetorno.EXIT)
-                    {
-                        //return r;
-                    }
-                    else if (r.t_val == Retorno.tipoRetorno.BREAK || r.t_val == Retorno.tipoRetorno.CONTINUE)
-                    {
-                        return r;
-                    }
-
-                }
+                ins.ejecutar(tablaLocal);
             }
             Tres.Instance.agregarLinea(a999);
             Tres.Instance.agregarLinea(a6);
             //instrucciones else
-
+            Tres.Instance.agregarComentario("else-if-listado");
             if (listadoMultiple != null)
             {
+                
                 //si tiene else if
                 foreach (MultiElse sx in listadoMultiple)
                 {
@@ -130,21 +119,12 @@ namespace CompiPascalC3D.Instrucciones
                     Tres.Instance.agregarLinea(a3x);
                     Tres.Instance.agregarLinea(a4x);
                     TSimbolo tablaLocal1 = new TSimbolo(ts);
+                    tablaLocal1.contexto = "else-if";
                     //se ejecuta el coso
+                    Tres.Instance.agregarComentario("else-if");
                     foreach (Instruccion stm in sx.listado)
                     {
-                        Retorno r = (Retorno)stm.ejecutar(tablaLocal1);
-                        if (r != null)
-                        {
-                            if (r.t_val == Retorno.tipoRetorno.EXIT)
-                            {
-                                return r;
-                            }
-                            else if (r.t_val == Retorno.tipoRetorno.BREAK || r.t_val == Retorno.tipoRetorno.CONTINUE)
-                            {
-                                return r;
-                            }
-                        }
+                        stm.ejecutar(tablaLocal1);
                     }
                     Tres.Instance.agregarLinea(a999);
                     Tres.Instance.agregarLinea(a6x);
@@ -157,7 +137,7 @@ namespace CompiPascalC3D.Instrucciones
             {
                 //contiene else con almenos una instruccion
                 TSimbolo tablaLocal3 = new TSimbolo(ts);
-
+                tablaLocal.contexto = "else";
                 foreach (Instruccion ins in listaInstruccionesElse)
                 {
                     Retorno r = (Retorno)ins.ejecutar(tablaLocal3  );

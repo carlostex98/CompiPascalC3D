@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CompiPascalC3D.General;
 using CompiPascalC3D.Analizador;
+using System.Diagnostics;
 
 namespace CompiPascalC3D
 {
@@ -17,6 +18,14 @@ namespace CompiPascalC3D
         public Form1()
         {
             InitializeComponent();
+            string value = "9quali52ty3";
+
+            // Convert the string into a byte[].
+            /*byte[] ult = Encoding.ASCII.GetBytes(value);
+            for (int i = 0; i < ult.Length; i++)
+            {
+                System.Diagnostics.Debug.WriteLine(Convert.ToInt32(ult[i]));
+            }*/
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,6 +43,90 @@ namespace CompiPascalC3D
 
             salida.Text = Tres.Instance.devolverFullCodigo();
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            reporteSimbolos n = new reporteSimbolos();
+            n.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Errores n = new Errores();
+            n.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            grafica_ts n = new grafica_ts();
+            n.Show();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\",
+                Title = "Buscar para compilar",
+
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "txt",
+                Filter = "txt files (*.txt)|*.txt | Pascal Files (*.pas) | *.pas | Todos (*.*)|*.*",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //entrada.Text = openFileDialog1.FileName;
+                string text = System.IO.File.ReadAllText(openFileDialog1.FileName);
+                entrada.Text = text;
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + "dot -Tpng AST.txt -o outfile.png")
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                WorkingDirectory = @"C:\compiladores2\"
+            };
+
+            StringBuilder sb = new StringBuilder();
+            Process p = Process.Start(processInfo);
+            p.OutputDataReceived += (sender, args) => sb.AppendLine(args.Data);
+            p.BeginOutputReadLine();
+            p.WaitForExit();
+            //System.Diagnostics.Debug.WriteLine(sb.ToString());
+            openImage();
+        }
+
+        public void openImage()
+        {
+            var processInfo = new ProcessStartInfo("cmd.exe", "/c " + "outfile.png")
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                WorkingDirectory = @"C:\compiladores2\"
+            };
+
+            StringBuilder sb = new StringBuilder();
+            Process p = Process.Start(processInfo);
+            p.OutputDataReceived += (sender, args) => sb.AppendLine(args.Data);
+            p.BeginOutputReadLine();
+            p.WaitForExit();
+            //System.Diagnostics.Debug.WriteLine(sb.ToString());
         }
     }
 }

@@ -26,6 +26,7 @@ namespace CompiPascalC3D.Instrucciones
         public Object ejecutar(TSimbolo ts) 
         {
             TSimbolo tablaLocal = new TSimbolo(ts);
+            tablaLocal.contexto = "while";
             int t0 = Tres.Instance.nuevaEtiqueta();//retorno
             string a45 = $"L{Convert.ToString(t0)}:";
             Tres.Instance.agregarLinea(a45);
@@ -51,36 +52,15 @@ namespace CompiPascalC3D.Instrucciones
 
             Tres.Instance.agregarLinea(a3);
 
-
+            tablaLocal.etiquetaBreak = t2;
+            tablaLocal.etiquetaContinue = t0;
 
 
             Tres.Instance.agregarLinea(a4);
             //ejecutar instrucciones
             foreach (Instruccion ins in listaInstrucciones)
             {
-                Retorno r = (Retorno)ins.ejecutar(tablaLocal);
-                if (r != null)
-                {
-                    if (r.t_val == Retorno.tipoRetorno.EXIT)
-                    {
-                        return r;
-                    }
-                    else if (r.t_val == Retorno.tipoRetorno.BREAK)
-                    {
-                        //br = true;
-                        //break;
-                        string a33 = $"goto L{Convert.ToString(t2)}; //break";
-                        Tres.Instance.agregarLinea(a33);
-
-                    }
-                    else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
-                    {
-                        //break;
-                        //ir al inicio
-                        string a33 = $"goto L{Convert.ToString(t0)}; //continue";
-                        Tres.Instance.agregarLinea(a33);
-                    }
-                }
+                ins.ejecutar(tablaLocal);
             }
 
             string a31 = $"goto L{Convert.ToString(t0)};";

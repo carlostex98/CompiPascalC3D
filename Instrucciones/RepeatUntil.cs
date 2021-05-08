@@ -25,36 +25,19 @@ namespace CompiPascalC3D.Instrucciones
         {
 
             TSimbolo tablaLocal = new TSimbolo(ts);
-
+            tablaLocal.contexto = "Repeat-until";
             int a = Tres.Instance.nuevaEtiqueta();//verdadero
             int b = Tres.Instance.nuevaEtiqueta();//falso
 
             string a45 = $"L{Convert.ToString(a)}:";
             Tres.Instance.agregarLinea(a45);
 
+            tablaLocal.etiquetaBreak = b;
+            tablaLocal.etiquetaContinue = a;
+
             foreach (Instruccion ins in listaInstrucciones)
             {
-                Retorno r = (Retorno)ins.ejecutar(tablaLocal);
-                if (r != null)
-                {
-                    if (r.t_val == Retorno.tipoRetorno.EXIT)
-                    {
-                        return r;
-                    }
-                    else if (r.t_val == Retorno.tipoRetorno.BREAK)
-                    {
-                        string br = $"goto L{Convert.ToString(b)}; //break";
-                        Tres.Instance.agregarLinea(br);
-                        //return null;
-                        //break;
-                    }
-                    else if (r.t_val == Retorno.tipoRetorno.CONTINUE)
-                    {
-                        string br = $"goto L{Convert.ToString(a)}; //continue";
-                        Tres.Instance.agregarLinea(br);
-                        //break;
-                    }
-                }
+                ins.ejecutar(tablaLocal);
             }
 
             Tres.Instance.agregarLinea("//inicio c");
