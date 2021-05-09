@@ -25,6 +25,7 @@ namespace CompiPascalC3D.Instrucciones
             TSimbolo tablaLocal = new TSimbolo(ts);
             tablaLocal.contexto = "Main";
             Tres.Instance.agregarLinea("int main(){");
+            Tres.Instance.agregarLinea("declaracionesGlobales();");
             foreach (Instruccion ins in listaInstrucciones)
             {
 

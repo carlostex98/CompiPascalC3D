@@ -36,32 +36,38 @@ namespace CompiPascalC3D.Instrucciones
 
             FuncionDato f = Maestro.Instance.AccederFuncion(this.nombre);
 
-            Operacion[] arr = new Operacion[this.parametros.Count];
+            //Operacion[] arr = new Operacion[this.parametros.Count];
 
-            int cant_vars = f.referencia.variables.Count; //cantidad de variables de tipo parametro en la funcion
 
-            if (cant_vars != parametros.Count)
+            if (f.referencia.variables!=null && parametros!=null)
             {
-                //se mandó a llamar con mas o menos valores de los que la funcion requiere
-                throw new Error(linea, columna, "Funcion: " + nombre + ", cantidad de parametros no coinciden", Error.Tipo_error.SINTACTICO);
+                int cant_vars = f.cantVars; //cantidad de variables de tipo parametro en la funcion
+
+                if (cant_vars != parametros.Count)
+                {
+                    //se mandó a llamar con mas o menos valores de los que la funcion requiere
+                    throw new Error(linea, columna, "Funcion: " + nombre + $", cantidad de parametros no coinciden{cant_vars}, {parametros.Count}", Error.Tipo_error.SINTACTICO);
+                }
+
+
+
+                int tml = Tres.Instance.obtenerTemporal();
+                string s1 = $"T{Convert.ToString(tml)} = SP + 1;";//Se le asigna al temporal la pos actual
+                string s2 = $"T{Convert.ToString(tml)} = T{Convert.ToString(tml)} + 1;";//aumentamos uno debido al return
+                Tres.Instance.agregarLinea(s1);
+                Tres.Instance.agregarLinea(s2);
+
+                foreach (Operacion t in this.parametros)
+                {
+                    Primitivo n = (Primitivo)t.ejecutar(ts);
+                    string t1 = $"stack[(int)T{Convert.ToString(tml)}] = {n.valor};";
+                    Tres.Instance.agregarLinea(t1);
+                    Tres.Instance.agregarLinea(s2);
+
+                }
             }
 
             
-
-            int tml = Tres.Instance.obtenerTemporal();
-            string s1 = $"T{Convert.ToString(tml)} = SP + 1;";//Se le asigna al temporal la pos actual
-            string s2 = $"T{Convert.ToString(tml)} = T{Convert.ToString(tml)} + 1;";//aumentamos uno debido al return
-            Tres.Instance.agregarLinea(s1);
-            Tres.Instance.agregarLinea(s2);
-
-            foreach (Operacion t in this.parametros)
-            {
-                Primitivo n = (Primitivo)t.ejecutar(ts);
-                string t1 = $"stack[(int)T{Convert.ToString(tml)}] = {n.valor};";
-                Tres.Instance.agregarLinea(t1);
-                Tres.Instance.agregarLinea(s2);
-
-            }
             Tres.Instance.agregarLinea("SP = SP + 1;");
             //se llama a la funcion
             Tres.Instance.agregarLinea($"{nombre}();");
@@ -91,7 +97,26 @@ namespace CompiPascalC3D.Instrucciones
                 Tres.Instance.agregarComentario("reasignacion temporales recursiva fin");
             }
 
+
+            //calculo de primitivo retorno
+
+            if (f.t_retorno == FuncionDato.tipoR.BOOLEAN)
+            {
+                return new Primitivo(Primitivo.tipo_val.BOOLEANO, $"T{Convert.ToString(reto)}");
+            }
+
+            if (f.t_retorno == FuncionDato.tipoR.INTEGER)
+            {
+                return new Primitivo(Primitivo.tipo_val.INT, $"T{Convert.ToString(reto)}");
+            }
+
+            if (f.t_retorno == FuncionDato.tipoR.REAL)
+            {
+                return new Primitivo(Primitivo.tipo_val.DECIMAL, $"T{Convert.ToString(reto)}");
+            }
+
             
+
             return new Primitivo(Primitivo.tipo_val.INT, $"T{Convert.ToString(reto)}");
 
             

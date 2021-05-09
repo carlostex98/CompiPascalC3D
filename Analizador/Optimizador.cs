@@ -47,7 +47,7 @@ namespace CompiPascalC3D.Analizador
             var ptcoma = ToTerm(";");
 
             var if_ = ToTerm("if");
-            var print_ = ToTerm("print");
+            var print_ = ToTerm("printf");
             var void_ = ToTerm("void");
             var return_ = ToTerm("return");
 
@@ -94,7 +94,7 @@ namespace CompiPascalC3D.Analizador
                 ;
 
             printf.Rule
-                =print_+pizq + cadena+ coma+ pizq + identificador+pder+operacion+pder+ptcoma
+                =print_+pizq + cadena + coma+ pizq + identificador + pder + operacion + pder + ptcoma
                 ;
 
             etiqueta.Rule 
@@ -124,8 +124,9 @@ namespace CompiPascalC3D.Analizador
                 ;
 
             asignacion.Rule
-                = identificador + igual +  operacion
-                | identificador + cizq + valor + cder + igual + operacion
+                = identificador + igual +  operacion + ptcoma
+                | identificador + cizq + pizq + identificador + pder +valor + cder + igual + operacion + ptcoma
+                | identificador + igual + identificador + cizq + pizq + identificador + pder + valor + cder + ptcoma
                 ;
 
             operacion.Rule

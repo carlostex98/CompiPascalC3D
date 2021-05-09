@@ -23,6 +23,9 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
+
+            //hay que validar si es globaaaal o no? modo pensativo
+            
             Simbolo s = ts.obtener(variable);
             if (s == null)
             {

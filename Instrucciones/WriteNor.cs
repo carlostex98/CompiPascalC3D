@@ -31,10 +31,10 @@ namespace CompiPascalC3D.Instrucciones
                     //imprime una cadena
                     int mx = Tres.Instance.obtenerTemporal();
                     string g = $"T{mx} = HP;";
-                    string g1 = $"HP = {x.valor};";
+                    //string g1 = $"HP = {x.valor};";
                     string g2 = $"HP = T{mx};";
                     Tres.Instance.agregarLinea(g);
-                    Tres.Instance.agregarLinea(g1);
+                    //Tres.Instance.agregarLinea(g1);
                     Tres.Instance.agregarLinea("imprimeCadena();");
                     Tres.Instance.agregarLinea(g2);
                 }

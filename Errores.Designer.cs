@@ -49,7 +49,7 @@ namespace CompiPascalC3D
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(776, 401);
+            this.dataGridView1.Size = new System.Drawing.Size(1019, 435);
             this.dataGridView1.TabIndex = 0;
             // 
             // Tipo
@@ -76,7 +76,7 @@ namespace CompiPascalC3D
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1043, 459);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Errores";
             this.Text = "Errores";

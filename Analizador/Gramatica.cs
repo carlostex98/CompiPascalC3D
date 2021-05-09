@@ -134,6 +134,7 @@ namespace CompiPascalC3D.Analizador
             NonTerminal type_var = new NonTerminal("type_var");
             NonTerminal list_vp = new NonTerminal("list_vp");
             NonTerminal lista_instr = new NonTerminal("lista_instr");
+            //NonTerminal lista_instr2 = new NonTerminal("lista_instr2");
             NonTerminal bloque_inst = new NonTerminal("bloque_inst");
             NonTerminal casos_lista = new NonTerminal("casos_lista");
             NonTerminal Exit_ = new NonTerminal("Exit_");
@@ -259,6 +260,8 @@ namespace CompiPascalC3D.Analizador
                 | declaracion
                 | graficar_ts + pizq + pder
                 | graficar_ts + pizq + pder + ptcoma
+                | funcion
+                | procedimiento
                 ;
 
 

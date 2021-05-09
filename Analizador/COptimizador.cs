@@ -160,6 +160,11 @@ namespace CompiPascalC3D.Analizador
 
                 }
             }
+            else if (ps.ChildNodes[0].Term.Name == "printf")
+            {
+                //asunto de imprimir
+                return $"printf({s.ChildNodes[2].Token.ValueString}, ({s.ChildNodes[5].Token.ValueString}){operacion_retorno(s.ChildNodes[7])});";
+            }
 
 
             return "";
@@ -200,10 +205,17 @@ namespace CompiPascalC3D.Analizador
         public string asignacion(ParseTreeNode ps)
         {
             //evaluamos segun las reglas
-            if (ps.ChildNodes.Count == 6)
+            if (ps.ChildNodes.Count == 10)
             {
                 //es de un acceso al heap o stack
+                //si es solo de uno
+                if (ps.ChildNodes[1].Term.Name == "=")
+                {
+                    //el otro jaja
+                    return $"{ps.ChildNodes[0].Token.ValueString} = {ps.ChildNodes[0].Token.ValueString};";
+                }
 
+                return $"{ps.ChildNodes[0].Token.ValueString}[({ps.ChildNodes[3].Token.ValueString}){ps.ChildNodes[5].Token.ValueString}] ={operacion_retorno(ps.ChildNodes[8])};";
             }
 
             

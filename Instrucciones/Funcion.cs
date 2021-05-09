@@ -40,7 +40,7 @@ namespace CompiPascalC3D.Instrucciones
             
             string a = $"void {nombre} ()" + "{ ";
             Tres.Instance.agregarLinea(a);
-            TSimbolo local = new TSimbolo();
+            TSimbolo local = new TSimbolo(ts);
             local.contexto = $"Funcion {nombre}";
             local.funcionEspecial = nombre;
 
@@ -48,11 +48,17 @@ namespace CompiPascalC3D.Instrucciones
             Tres.Instance.resetRelativo();
             //local.pos_ret = Tres.Instance.contadorHeap;
 
-            foreach (Declaracion vl in variables)
+
+            if (variables != null)
             {
-                vl.ejecutar(local);
+                foreach (Declaracion vl in variables)
+                {
+                    vl.ejecutar(local);
+                }
             }
+            
             g.referencia = local;
+            g.calcularNumero();
 
             foreach (Instruccion ins in listaInstrucciones)
             {

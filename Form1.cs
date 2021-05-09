@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CompiPascalC3D.General;
 using CompiPascalC3D.Analizador;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace CompiPascalC3D
 {
@@ -18,20 +19,19 @@ namespace CompiPascalC3D
         public Form1()
         {
             InitializeComponent();
-            string value = "9quali52ty3";
-
-            // Convert the string into a byte[].
-            /*byte[] ult = Encoding.ASCII.GetBytes(value);
-            for (int i = 0; i < ult.Length; i++)
-            {
-                System.Diagnostics.Debug.WriteLine(Convert.ToInt32(ult[i]));
-            }*/
+            //string sx = "L389 sdfd dsf";
+            //bool m = Regex.IsMatch(sx, @".*L[0-9].*");
+            //System.Diagnostics.Debug.WriteLine(m);
+            //var isNumeric = int.TryParse("12e3", out int n);
+            //System.Diagnostics.Debug.WriteLine(isNumeric);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             //compilamos
             compile();
+
+            
         }
 
         private void compile()
@@ -127,6 +127,15 @@ namespace CompiPascalC3D
             p.BeginOutputReadLine();
             p.WaitForExit();
             //System.Diagnostics.Debug.WriteLine(sb.ToString());
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            Tres.Instance.limpiar();
+            CTraductor eval = new CTraductor();
+            eval.codigo(entrada.Text);
+
+            salida.Text = Tres.Instance.obtenerDesanidado();
         }
     }
 }

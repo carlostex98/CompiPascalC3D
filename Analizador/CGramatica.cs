@@ -14,6 +14,8 @@ namespace CompiPascalC3D.Analizador
     class CGramatica
     {
         LinkedList<Instruccion> instrucciones_globales = new LinkedList<Instruccion>();
+        LinkedList<Instruccion> funciones = new LinkedList<Instruccion>();
+        LinkedList<Instruccion> fuertesDeclaraciones = new LinkedList<Instruccion>();
 
         public CGramatica()
         {
@@ -78,6 +80,35 @@ namespace CompiPascalC3D.Analizador
                     Tres.Instance.agregarLinea(g);
                 }
 
+                Tres.Instance.agregarLinea("void declaracionesGlobales(){");
+                foreach (Instruccion t in fuertesDeclaraciones)
+                {
+                    try
+                    {
+                        _ = t.ejecutar(global);
+                    }
+                    catch (Error x)
+                    {
+                        Maestro.Instance.addError(x);
+                        Maestro.Instance.addOutput(x.getDescripcion());
+                        //System.Diagnostics.Debug.WriteLine("eeeeeee");
+                    }
+                }
+                Tres.Instance.agregarLinea("return;\n}");
+
+                foreach (Instruccion t in funciones)
+                {
+                    try
+                    {
+                        _ = t.ejecutar(global);
+                    }
+                    catch (Error x)
+                    {
+                        Maestro.Instance.addError(x);
+                        Maestro.Instance.addOutput(x.getDescripcion());
+                        //System.Diagnostics.Debug.WriteLine("eeeeeee");
+                    }
+                }
 
                 foreach (Instruccion t in instrucciones_globales)
                 {
@@ -124,7 +155,9 @@ namespace CompiPascalC3D.Analizador
             {
                 case "funcion":
                     //llama a funcion(declaracion)
-                    return evalFuncDec(ps.ChildNodes[0]);
+                    //return evalFuncDec(ps.ChildNodes[0]);
+                    funciones.AddLast(evalFuncDec(ps.ChildNodes[0]));
+                    return new InstruccionVacia();
                     break;
                 case "programa":
                     //evaluamos la sentencia programa, solo hace un print a la consola virtual
@@ -138,11 +171,17 @@ namespace CompiPascalC3D.Analizador
                 case "declaracion":
                     //registramos en los simbolos, en este caso el contexto general
                     ParseTreeNode mx = ps.ChildNodes[0];
-                    return declaracionVariable(mx);
+                    //return declaracionVariable(mx);
+                    fuertesDeclaraciones.AddLast(declaracionVariable(mx));
+                    return new  InstruccionVacia();
                     break;
                 case "procedimiento":
                     // usa lo mismo que la funcion
-                    return evalProdDec(ps.ChildNodes[0]);
+                    //return evalProdDec(ps.ChildNodes[0]);
+
+                    funciones.AddLast(evalProdDec(ps.ChildNodes[0]));
+                    return new InstruccionVacia();
+
                     break;
 
                 case "graficar_ts":
@@ -510,6 +549,21 @@ namespace CompiPascalC3D.Analizador
             {
 
                 return new GraficarTS();
+            }
+            else if (aux.Term.Name == "funcion")
+            {
+
+                //return evalFuncDec(ps.ChildNodes[0]);
+                funciones.AddLast(evalFuncDec(ps.ChildNodes[0]));
+
+                return new InstruccionVacia();
+            }
+            else if (aux.Term.Name == "procedimiento")
+            {
+
+                //return evalProdDec(ps.ChildNodes[0]);
+                funciones.AddLast(evalProdDec(ps.ChildNodes[0]));
+                return new InstruccionVacia();
             }
 
             return null;

@@ -19,6 +19,7 @@ namespace CompiPascalC3D.General
         public tipoF tipo;
         public tipoR t_retorno;
         public TSimbolo referencia;
+        public int cantVars = 0;
 
 
         public FuncionDato(string n, LinkedList<Instruccion> lst, LinkedList<Declaracion> vars, tipoF t, tipoR r)
@@ -39,6 +40,11 @@ namespace CompiPascalC3D.General
         public LinkedList<Declaracion> retornarVars()
         {
             return this.variables;
+        }
+
+        public void calcularNumero()
+        {
+            this.cantVars = referencia.variables.Count;
         }
 
 

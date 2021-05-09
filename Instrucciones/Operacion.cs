@@ -139,6 +139,39 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
+                //verificar posible optimizacion
+                var isNum = int.TryParse(a.valor, out int n);
+                if (isNum)
+                {
+                    // 0/val = 0 regla 16
+
+                    if (n == 0)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = 0;";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 16", $"T{Convert.ToString(tx)} = {a.valor}/{b.valor};", $"T{Convert.ToString(tx)} = 0;", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+                }
+
+                var isNum1 = int.TryParse(b.valor, out int nx);
+                if (isNum1)
+                {
+                    // val/1 = val regla 13
+
+                    if (nx == 1)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = {a.valor};";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 13", $"T{Convert.ToString(tx)} = {a.valor}/{b.valor};", $"T{Convert.ToString(tx)} = {a.valor};", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+                }
+
+
+
                 int t = Tres.Instance.obtenerTemporal();
                 string g = $"T{Convert.ToString(t)} = {a.valor}/{b.valor};";
                 Tres.Instance.agregarLinea(g);
@@ -157,6 +190,79 @@ namespace CompiPascalC3D.Instrucciones
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
 
+                //evaluamos la optimizacion
+                var isNum = int.TryParse(a.valor, out int n);
+                if (isNum)
+                {
+                    
+                    //algo por cero, regla 15
+                    if (n == 0)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = 0;";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 15", $"T{Convert.ToString(tx)} = {a.valor}*{b.valor};", $"T{Convert.ToString(tx)} = 0;", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+
+                    // algo por 1, regla 12
+                    if (n == 1)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = {b.valor};";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 12", $"T{Convert.ToString(tx)} = {a.valor}*{b.valor};", $"T{Convert.ToString(tx)} = {b.valor};", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+
+                    //regla 14, algo por 2
+                    if (n == 2)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = {b.valor} + {b.valor};";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 14", $"T{Convert.ToString(tx)} = {a.valor}*{b.valor};", $"T{Convert.ToString(tx)} = {b.valor} + {b.valor};", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+
+                }
+
+                var isNum1 = int.TryParse(b.valor, out int nx);
+                if (isNum1)
+                {
+                    // algo por cero regla 15
+
+                    if (nx == 0)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = 0;";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 15", $"T{Convert.ToString(tx)} = {a.valor}*{b.valor};", $"T{Convert.ToString(tx)} = 0;", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+
+                    // algo por 1, regla 12
+                    if (nx == 1)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = {a.valor};";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 12", $"T{Convert.ToString(tx)} = {a.valor}*{b.valor};", $"T{Convert.ToString(tx)} = {a.valor};", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+
+                    //regla 14, algo por 2
+                    if (nx == 2)
+                    {
+                        int tx = Tres.Instance.obtenerTemporal();
+                        string gx = $"T{Convert.ToString(tx)} = {a.valor} + {a.valor};";
+                        Tres.Instance.agregarLinea(gx);
+                        Tres.Instance.agregarOptimizacion("Mirilla", "Regla 14", $"T{Convert.ToString(tx)} = {a.valor}*{b.valor};", $"T{Convert.ToString(tx)} = {a.valor} + {a.valor};", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.INT, "T" + Convert.ToString(tx));
+                    }
+                }
+
+
                 int t = Tres.Instance.obtenerTemporal();
                 string g = $"T{Convert.ToString(t)} = {a.valor} * {b.valor};";
                 Tres.Instance.agregarLinea(g);
@@ -174,6 +280,9 @@ namespace CompiPascalC3D.Instrucciones
                 {
                     throw new Error(0, 0, "Operador no numerico: " + Convert.ToString(b.valor), Error.Tipo_error.SEMANTICO);
                 }
+
+                //evaluar optimizacion
+
 
 
                 int t = Tres.Instance.obtenerTemporal();
@@ -498,6 +607,30 @@ namespace CompiPascalC3D.Instrucciones
             }
             else if (tipo == Tipo_operacion.EQUIVALENCIA)
             {
+
+                //optimizacion jejeje
+                var isNum1 = int.TryParse(a.valor, out int nx1);
+                var isNum2 = int.TryParse(b.valor, out int nx2);
+
+                if (isNum1 && isNum2)
+                {
+                    //los dos son numeros
+                    if (nx1 == nx2)
+                    {
+                        //regla3
+                        Tres.Instance.agregarOptimizacion("Bloque", "Regla 3", $"if({a.valor} == {b.valor})", $"true", Tres.Instance.devolverLineasCod());
+                        return new Primitivo(Primitivo.tipo_val.BOOLEANO, "1");
+                    }
+
+                    //regla 4
+                    Tres.Instance.agregarOptimizacion("Bloque", "Regla 4", $"if({a.valor} == {b.valor})", $"false", Tres.Instance.devolverLineasCod());
+                    return new Primitivo(Primitivo.tipo_val.BOOLEANO, "0");
+                }
+
+
+
+
+
                 //TODO coso del if
                 int t1 = Tres.Instance.nuevaEtiqueta();//verdadero
                 int t2 = Tres.Instance.nuevaEtiqueta();//falso

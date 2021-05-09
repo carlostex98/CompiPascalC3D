@@ -19,6 +19,7 @@ namespace CompiPascalC3D.General
         public int stack = 10000;
 
         public int usoHeap = 0;
+        public string desanidado;
 
         public LinkedList<string> codigo = new LinkedList<string>();
         public LinkedList<string[]> reglas = new LinkedList<string[]>();
@@ -51,6 +52,16 @@ namespace CompiPascalC3D.General
         }
 
 
+        public void guardarDesanidado(string t)
+        {
+            this.desanidado = t;
+        }
+
+        public string obtenerDesanidado()
+        {
+            return this.desanidado;
+        }
+
         public void resetRelativo()
         {
             this.contador_relativo = 0;
@@ -78,6 +89,10 @@ namespace CompiPascalC3D.General
             contadorHeap++;
         }
 
+        public string devolverLineasCod()
+        {
+            return Convert.ToString(codigo.Count);
+        }
 
         public void limpiar()
         {

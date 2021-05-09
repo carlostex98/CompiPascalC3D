@@ -34,90 +34,65 @@ namespace CompiPascalC3D.Analizador
             {
                 //indica error
                 //Maestro.Instance.addMessage("Entrada incorrecta");
-                System.Diagnostics.Debug.WriteLine("-----");
+                System.Diagnostics.Debug.WriteLine("molo traduccion");
                 foreach (Irony.LogMessage a in arbol.ParserMessages)
                 {
-                    //System.Diagnostics.Debug.WriteLine(a.Message, a.Location.Line, a.Location.Column);
-                    //System.Diagnostics.Debug.WriteLine(a.Location.Line);
-                    //System.Diagnostics.Debug.WriteLine(a.Location.Column);
-                    //System.Diagnostics.Debug.WriteLine("-----");
+                    System.Diagnostics.Debug.WriteLine(a.Message, a.Location.Line, a.Location.Column);
+                    System.Diagnostics.Debug.WriteLine(a.Location.Line);
+                    System.Diagnostics.Debug.WriteLine(a.Location.Column);
+                    System.Diagnostics.Debug.WriteLine("-----");
 
-                    Maestro.Instance.addError(new Error(a.Location.Line, a.Location.Column, a.Message, Error.Tipo_error.LEXICO));
+                    //Maestro.Instance.addError(new Error(a.Location.Line, a.Location.Column, a.Message, Error.Tipo_error.LEXICO));
                 }
-                Maestro.Instance.addOutput("No se puede traducir, ver tabla de errores");
+                //Maestro.Instance.addOutput("No se puede traducir, ver tabla de errores");
             }
             else
             {
                 //traduccion ok
-                this.evaluarInstrucciones(raiz_grogram.ChildNodes[0]);
+                string tt = this.evaluarInstrucciones(raiz_grogram.ChildNodes[0]);
+                Tres.Instance.guardarDesanidado(tt);
                 
             }
 
         }
 
-        public void agregarCodigo(string s)
+        public string evaluarInstrucciones(ParseTreeNode ps)
         {
-            codigo_texto += s;
-        }
-
-
-        public void agregarFuncion(string s)
-        {
-            funcion_texto += s;
-        }
-
-        public void evaluarInstrucciones(ParseTreeNode ps)
-        {
-            //System.Diagnostics.Debug.WriteLine(ps.ChildNodes.Count); 
-
             if (ps.ChildNodes.Count == 2)
             {
-                evaluarInstruccion(ps.ChildNodes[0]);
-                evaluarInstrucciones(ps.ChildNodes[1]);
+                return unaIntruccion(ps.ChildNodes[0]) + evaluarInstrucciones(ps.ChildNodes[1]);
+            }
+            //si solo es uno
+            return unaIntruccion(ps.ChildNodes[1]);
+
+            return "";
+        }
+
+        public string unaIntruccion(ParseTreeNode ps)
+        {
+            //
+            if (ps.ChildNodes[0].Term.Name == "mucho_texto")
+            {
+                return this.codigo_texto = this.codigo_texto + ps.ChildNodes[0].Token.ValueString;
             }
             else
             {
-                evaluarInstruccion(ps.ChildNodes[0]);
+                evaluarFunc(ps.ChildNodes[0]);
+                return "";
             }
+
+            return "";
         }
 
-        public void evaluarInstruccion(ParseTreeNode ps)
+        public void evaluarFunc(ParseTreeNode ps)
         {
-            //aca se leeee
-            switch (ps.ChildNodes[0].Term.Name)
-            {
-                case "funcion":
-                    //llama a funcion(declaracion)
-                    //return evalFuncDec(ps.ChildNodes[0]);
-                    break;
-                case "programa":
-                    
-                    ParseTreeNode aux = ps.ChildNodes[0].ChildNodes[1];
-                    agregarCodigo("program " + aux.Token.ValueString + ";");
-                    break;
-                case "declaracion":
-                    //registramos en los simbolos, en este caso el contexto general
-                    ParseTreeNode mx = ps.ChildNodes[0];
-                    //return declaracionVariable(mx);
-                    break;
-                case "procedimiento":
-                    // usa lo mismo que la funcion
-                    //return evalProdDec(ps.ChildNodes[0]);
-                    break;
-
-                case "graficar_ts":
-                    // usa lo mismo que la funcion
-                    agregarCodigo("graficar_ts();");
-                    break;
-                case "main":
-                    //                      main           listaInstr    
-                    ParseTreeNode auxx = ps.ChildNodes[0].ChildNodes[1];
-
-                    //return new MainProgram(evaluar_general(auxx), ps.ChildNodes[0].ChildNodes[0].Token.Location.Line, ps.ChildNodes[0].ChildNodes[0].Token.Location.Column);
-                    break;
-            }
-
+            string g = $"function {ps.ChildNodes[1].Token.ValueString} begin {evaluarInstrucciones(ps.ChildNodes[3])} end;";
+            this.funcion_texto = this.funcion_texto + g;
         }
+
+
+
+        
 
 
 
