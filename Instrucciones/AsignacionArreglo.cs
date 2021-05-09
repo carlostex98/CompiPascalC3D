@@ -54,7 +54,7 @@ namespace CompiPascalC3D.Instrucciones
             {
                 if (z == dims.Length - 1)
                 {
-                    temporales_salida[z - 1] = temporales[z - 1];
+                    temporales_salida[z] = temporales[z];
 
                     break;
                 }
@@ -66,7 +66,7 @@ namespace CompiPascalC3D.Instrucciones
                     string b = $"T{Convert.ToString(t1)} = T{Convert.ToString(t1)} * {Convert.ToString(dims[y])};";
                     Tres.Instance.agregarLinea(b);
                 }
-
+                temporales_salida[z] = $"T{Convert.ToString(t1)}";
             }
 
             int mx = Tres.Instance.obtenerTemporal();
@@ -87,7 +87,7 @@ namespace CompiPascalC3D.Instrucciones
             string z1 = $"T{Convert.ToString(mx1)} = HP - {Convert.ToString(aux.inicioHeap)};";
             string z2 = $"T{Convert.ToString(mx2)} = HP - {Convert.ToString(mx1)};";
             string z3 = $"T{Convert.ToString(mx2)} = T{Convert.ToString(mx2)} + {Convert.ToString(mx)};";
-            string z4 = $"heap[T{Convert.ToString(mx2)}] == {ss.valor};";
+            string z4 = $"heap[(int)T{Convert.ToString(mx2)}] = {ss.valor};";
             Tres.Instance.agregarLinea(z1);
             Tres.Instance.agregarLinea(z2);
             Tres.Instance.agregarLinea(z3);

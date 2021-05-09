@@ -193,10 +193,63 @@ namespace CompiPascalC3D.Analizador
                     ParseTreeNode auxx = ps.ChildNodes[0].ChildNodes[1];
 
                     return new MainProgram(evaluar_general(auxx), ps.ChildNodes[0].ChildNodes[0].Token.Location.Line, ps.ChildNodes[0].ChildNodes[0].Token.Location.Column);
+
+                case "dec_arreglo":
+                    //se añade a las declaraciones
+
+                    fuertesDeclaraciones.AddLast(evalArreglo(ps.ChildNodes[0]));
+                    //DeclaracionArreglo a = evalArreglo(ps.ChildNodes[0]);
+
+                    return new InstruccionVacia();
+
+                    break;
             }
 
             return null;
         }
+
+
+        public Instruccion evalArreglo(ParseTreeNode ps)
+        {
+            //evaluamos el coso del arrego
+
+            return new DeclaracionArreglo(ps.ChildNodes[1].Token.ValueString, dimsArreglo(ps.ChildNodes[5]));
+
+            //return null;
+        }
+
+
+        public LinkedList<int> dimsArreglo(ParseTreeNode ps)
+        {
+            if (ps.ChildNodes.Count == 6)
+            {
+                //asunto de recursividad
+                LinkedList<int> temp1 = new LinkedList<int>(dimsArreglo(ps.ChildNodes[5]));
+
+                LinkedList<int> temp3 = new LinkedList<int>();
+                int a3 = int.Parse(ps.ChildNodes[0].Token.ValueString);
+                int b3 = int.Parse(ps.ChildNodes[3].Token.ValueString);
+                temp3.AddLast(a3);
+                temp3.AddLast(b3);
+
+                foreach (int t in temp1)
+                {
+                    temp3.AddLast(t);
+                }
+
+                return temp3;
+            }
+            //solo uno
+            LinkedList<int> temp = new LinkedList<int>();
+            int a = int.Parse(ps.ChildNodes[0].Token.ValueString);
+            int b = int.Parse(ps.ChildNodes[3].Token.ValueString);
+            temp.AddLast(a);
+            temp.AddLast(b);
+
+            return temp;
+            //return null;
+        }
+
 
         public Instruccion evlDecFunc(ParseTreeNode ps)
         {
@@ -565,8 +618,28 @@ namespace CompiPascalC3D.Analizador
                 funciones.AddLast(evalProdDec(ps.ChildNodes[0]));
                 return new InstruccionVacia();
             }
+            else if (aux.Term.Name == "dec_arreglo")
+            {
+                //ParseTreeNode mx = ps.ChildNodes[0];
+                return evalArreglo(ps.ChildNodes[0]);
+            }
+
+            else if (aux.Term.Name == "asig_arreglo")
+            {
+                //ParseTreeNode mx = ps.ChildNodes[0];
+                return evalAsigArreglo(ps.ChildNodes[0]);
+            }
+
 
             return null;
+        }
+
+        public Instruccion evalAsigArreglo(ParseTreeNode ps)
+        {
+
+            return new AsignacionArreglo(ps.ChildNodes[0].Token.ValueString, paramsArreglo(ps.ChildNodes[1]), evalOpr(ps.ChildNodes[3]));
+
+            //return null;
         }
 
 
@@ -930,9 +1003,46 @@ namespace CompiPascalC3D.Analizador
                     return evalCallOp(aux);
                 }
 
+                else if (aux.Term.Name == "acc_arreglo")
+                {
+                    //Primitivo p = new Primitivo(Primitivo.tipo_val.CADENA, (object)false);
+                    //return evalCallOp(aux);
+                    return evalAccArreglo(aux);
+                }
+
             }
 
             return null;
+        }
+
+
+        public Operacion evalAccArreglo(ParseTreeNode ps)
+        {
+            //return new
+            return new Operacion(new AccesoArreglo(ps.ChildNodes[0].Token.ValueString, paramsArreglo(ps.ChildNodes[1])));
+            //return null;
+        }
+
+        public LinkedList<Operacion> paramsArreglo(ParseTreeNode ps)
+        {
+            if (ps.ChildNodes.Count == 4)
+            {
+                //uno con muchos
+                LinkedList<Operacion> temp = new LinkedList<Operacion>(paramsArreglo(ps.ChildNodes[3]));
+                LinkedList<Operacion> n2 = new LinkedList<Operacion>();
+                n2.AddLast(evalOpr(ps.ChildNodes[1]));
+
+                foreach (Operacion r in temp)
+                {
+                    n2.AddLast(r);
+                }
+                return n2;
+            }
+
+            LinkedList<Operacion> n1 = new LinkedList<Operacion>();
+            n1.AddLast(evalOpr(ps.ChildNodes[1]));
+            return n1;
+            //return null;
         }
 
 

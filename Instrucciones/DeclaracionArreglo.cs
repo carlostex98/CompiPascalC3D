@@ -25,6 +25,8 @@ namespace CompiPascalC3D.Instrucciones
                 //tiramos excepcion
             }
 
+            Tres.Instance.agregarComentario("inicio declaracion arreglo");
+
             Arreglo arreglo = new Arreglo();
             int[] vs = new int[dimensiones.Count];
             int[] finalDim = new int[dimensiones.Count/2];
@@ -35,9 +37,11 @@ namespace CompiPascalC3D.Instrucciones
                 i++;
             }
 
-            for (int t = 0; t < finalDim.Length; t = t + 2)
+            i = 0;
+            for (int t = 0; t < vs.Length; t = t + 2)
             {
-                finalDim[t] = vs[t + 1] - vs[t];
+                finalDim[i] = vs[t + 1] - vs[t];
+                i++;
             }
 
 
@@ -53,9 +57,18 @@ namespace CompiPascalC3D.Instrucciones
             LinkedList<int> vs1 = new LinkedList<int>(finalDim);
             arreglo.dimensiones = vs1;
 
+            Tres.Instance.aumentarHeap(1);
+            Tres.Instance.agregarLinea("HP = HP + 1;");
             arreglo.inicioHeap=Tres.Instance.obtenerHeap();
-            Tres.Instance.aumentarHeap(tam);
+            for (int z = 0; z < tam; z++)
+            {
+                Tres.Instance.agregarLinea($"heap[(int)HP] = 0;");
+                Tres.Instance.agregarLinea("HP = HP + 1;");
+            }
+            Tres.Instance.aumentarHeap(tam + 1);
             ts.agregarArreglo(nombre, arreglo);
+
+            Tres.Instance.agregarComentario("fin declaracion arreglo");
             return null;
         }
 

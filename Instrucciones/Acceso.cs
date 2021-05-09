@@ -25,6 +25,7 @@ namespace CompiPascalC3D.Instrucciones
         {
 
             //hay que validar si es globaaaal o no? modo pensativo
+            //lego de consultarlo con la almohada se llegó a la conclusión que no :)
             
             Simbolo s = ts.obtener(variable);
             if (s == null)

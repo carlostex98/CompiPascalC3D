@@ -32,7 +32,8 @@ namespace CompiPascalC3D.Instrucciones
             EQUIVALENCIA,
             ACCESO,
             FUNCION_RETORNO,
-            DIFERENCIA
+            DIFERENCIA,
+            ACCESO_ARREGLO
         }
 
         private Tipo_operacion tipo;
@@ -41,6 +42,7 @@ namespace CompiPascalC3D.Instrucciones
         private Object valor; //pendiente eliminar
         private Primitivo val;
         private Acceso acc;
+        private AccesoArreglo accArreglo;
 
         private CallFuncion func;
         private int linea;
@@ -73,6 +75,13 @@ namespace CompiPascalC3D.Instrucciones
             this.acc = a;
         }
 
+        public Operacion(AccesoArreglo a)
+        {
+            this.tipo = Tipo_operacion.ACCESO_ARREGLO;
+            this.accArreglo = a;
+        }
+
+
         public Operacion(CallFuncion cs)
         {
             this.func = cs;
@@ -95,6 +104,13 @@ namespace CompiPascalC3D.Instrucciones
             if (tipo == Tipo_operacion.ACCESO)
             {
                 Primitivo p = (Primitivo)acc.ejecutar(ts);
+                return p;
+            }
+
+
+            if (tipo == Tipo_operacion.ACCESO_ARREGLO)
+            {
+                Primitivo p = (Primitivo)accArreglo.ejecutar(ts);
                 return p;
             }
 

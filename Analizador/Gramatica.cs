@@ -95,6 +95,8 @@ namespace CompiPascalC3D.Analizador
             var true_ = ToTerm("true");
             var false_ = ToTerm("false");
             var for_ = ToTerm("for");
+            var type_ = ToTerm("type");
+            var array_ = ToTerm("array");
 
 
 
@@ -153,7 +155,12 @@ namespace CompiPascalC3D.Analizador
             NonTerminal multi_else = new NonTerminal("multi_else");
 
             NonTerminal dec_func = new NonTerminal("dec_func");
+            NonTerminal dec_arreglo = new NonTerminal("dec_arreglo");
+            NonTerminal dims_arreglo = new NonTerminal("dims_arreglo");
 
+            NonTerminal acc_arreglo = new NonTerminal("acc_arreglo");
+            NonTerminal params_acc_arreglo = new NonTerminal("params_acc_arreglo");
+            NonTerminal asig_arreglo = new NonTerminal("asig_arreglo");
 
             //NonTerminal  = new NonTerminal("");
             #endregion
@@ -168,10 +175,24 @@ namespace CompiPascalC3D.Analizador
                 | instrucciones
                 ;
 
+            dec_arreglo.Rule 
+                = type_ + identificador + igual + array_ + cizq + dims_arreglo + cder + of_ +  type_var + ptcoma
+                ;
+
+            dims_arreglo.Rule 
+                = numero + punto + punto + numero + coma + dims_arreglo
+                | numero + punto + punto + numero
+                ;
+
+            asig_arreglo.Rule
+                = identificador + params_acc_arreglo + igual + expresion + ptcoma
+                ;
+
             instrucciones.Rule
                 = funcion
                 | programa
                 | declaracion
+                | dec_arreglo
                 | procedimiento
                 | main_
                 | graficar_ts + pizq + pder
@@ -262,6 +283,8 @@ namespace CompiPascalC3D.Analizador
                 | graficar_ts + pizq + pder + ptcoma
                 | funcion
                 | procedimiento
+                | dec_arreglo
+                | asig_arreglo
                 ;
 
 
@@ -368,6 +391,16 @@ namespace CompiPascalC3D.Analizador
                 | pizq + expresion + pder
                 | true_
                 | false_
+                | acc_arreglo
+                ;
+
+            acc_arreglo.Rule
+                = identificador + params_acc_arreglo
+                ;
+
+            params_acc_arreglo.Rule
+                = cizq + expresion + cder + params_acc_arreglo
+                | cizq + expresion + cder
                 ;
 
             asignacion.Rule = identificador + dpunto + igual + expresion;
