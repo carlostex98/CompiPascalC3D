@@ -172,8 +172,8 @@ namespace CompiPascalC3D.General
         {
 
             string a = "#include <stdio.h>\n";
-            string b = "float heap[10000];\n";
-            string c = "float stack[10000];\n";
+            string b = "float heap[100000];\n";
+            string c = "float stack[100000];\n";
             string d = "float SP;\n";
             string e = "float HP;\n";
 
