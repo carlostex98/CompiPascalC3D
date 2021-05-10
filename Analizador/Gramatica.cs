@@ -185,7 +185,7 @@ namespace CompiPascalC3D.Analizador
                 ;
 
             asig_arreglo.Rule
-                = identificador + params_acc_arreglo + igual + expresion + ptcoma
+                = identificador + params_acc_arreglo + dpunto + igual + expresion + ptcoma
                 ;
 
             instrucciones.Rule

@@ -42,6 +42,12 @@ namespace CompiPascalC3D.Instrucciones
 
             Tres.Instance.agregarLinea("//inicio c");
             Primitivo p = (Primitivo)condicion.ejecutar(tablaLocal);
+
+            if (p.t_val != Primitivo.tipo_val.BOOLEANO)
+            {
+                throw new Error(linea, columna, "variable no booleana", Error.Tipo_error.SEMANTICO);
+            }
+
             Tres.Instance.agregarLinea("//fin c");
             string a1 = $"if({p.valor} >= 1)" + "{" + $" goto L{a};" + "}";
             string a3 = $"goto L{Convert.ToString(b)};";

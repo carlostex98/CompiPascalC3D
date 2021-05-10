@@ -23,6 +23,7 @@ namespace CompiPascalC3D.Instrucciones
             if (ts.etiquetaContinue == -1)
             {
                 //error
+                throw new Error(linea, columna, "Continue fuera de contexto", Error.Tipo_error.SEMANTICO);
             }
             Tres.Instance.agregarComentario("etiqueta continue");
             Tres.Instance.agregarLinea($"goto L{ts.etiquetaContinue};");

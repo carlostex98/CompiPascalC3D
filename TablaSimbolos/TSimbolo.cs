@@ -77,7 +77,7 @@ namespace CompiPascalC3D.TablaSimbolos
             TSimbolo aux = this;
             while (aux != null)
             {
-                if (this.variables.ContainsKey(nombre) || this.arreglos.ContainsKey(nombre))
+                if (aux.variables.ContainsKey(nombre) || aux.arreglos.ContainsKey(nombre))
                 {
                     return true;
                 }
@@ -92,7 +92,7 @@ namespace CompiPascalC3D.TablaSimbolos
             TSimbolo aux = this;
             while (aux != null)
             {
-                if (this.arreglos.ContainsKey(nombre))
+                if (aux.arreglos.ContainsKey(nombre))
                 {
                     return true;
                 }
@@ -107,9 +107,9 @@ namespace CompiPascalC3D.TablaSimbolos
             TSimbolo aux = this;
             while (aux != null)
             {
-                if (this.arreglos.ContainsKey(nombre))
+                if (aux.arreglos.ContainsKey(nombre))
                 {
-                    return arreglos[nombre];
+                    return aux.arreglos[nombre];
                 }
                 aux = aux.heredado;
             }

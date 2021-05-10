@@ -86,8 +86,8 @@ namespace CompiPascalC3D.Instrucciones
                             dir = Tres.Instance.nuevo_relativo();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
                             Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
-                            string a = $"stack[(int)SP] = 0;";
-                            Tres.Instance.agregarLinea(a);
+                            //string a = $"stack[(int)SP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                             //Tres.Instance.agregarLinea("HP = HP + 1;");
                             //string a = $"heap[HP] = 0;";
                             //Tres.Instance.agregarLinea(a);
@@ -123,8 +123,8 @@ namespace CompiPascalC3D.Instrucciones
                             dir = Tres.Instance.nuevo_relativo();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
                             Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
-                            string a = $"stack[(int)SP] = 0;";
-                            Tres.Instance.agregarLinea(a);
+                            //string a = $"stack[(int)SP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                             //string a = $"heap[HP] = 0;";
                             //Tres.Instance.agregarLinea(a);
                         }
@@ -160,8 +160,8 @@ namespace CompiPascalC3D.Instrucciones
                             dir = Tres.Instance.nuevo_relativo();
                             Tres.Instance.agregarLinea("SP = SP + 1;");
                             Tres.Instance.agregarLinea($"//variable dentro de funcion o metodo rel({Convert.ToString(dir)})");
-                            string a = $"stack[(int)SP] = 0;";
-                            Tres.Instance.agregarLinea(a);
+                            //string a = $"stack[(int)SP] = 0;";
+                            //Tres.Instance.agregarLinea(a);
                             //string a = $"heap[HP] = 0;";
                             //Tres.Instance.agregarLinea(a);
                         }

@@ -137,5 +137,11 @@ namespace CompiPascalC3D
 
             salida.Text = Tres.Instance.obtenerDesanidado();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Optimizaciones n = new Optimizaciones();
+            n.Show();
+        }
     }
 }

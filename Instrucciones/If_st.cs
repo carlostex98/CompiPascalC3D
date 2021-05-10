@@ -140,18 +140,8 @@ namespace CompiPascalC3D.Instrucciones
                 tablaLocal.contexto = "else";
                 foreach (Instruccion ins in listaInstruccionesElse)
                 {
-                    Retorno r = (Retorno)ins.ejecutar(tablaLocal3  );
-                    if (r != null)
-                    {
-                        if (r.t_val == Retorno.tipoRetorno.EXIT)
-                        {
-                            return r;
-                        }
-                        else if (r.t_val == Retorno.tipoRetorno.BREAK || r.t_val == Retorno.tipoRetorno.CONTINUE)
-                        {
-                            return r;
-                        }
-                    }
+                    ins.ejecutar(tablaLocal3);
+                   
                 }
                 Tres.Instance.agregarLinea(a999);
             }

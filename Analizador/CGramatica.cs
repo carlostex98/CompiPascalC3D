@@ -8,6 +8,7 @@ using CompiPascalC3D.General;
 using CompiPascalC3D.Instrucciones;
 using CompiPascalC3D.TablaSimbolos;
 using System.Diagnostics;
+using System.IO;
 
 namespace CompiPascalC3D.Analizador
 {
@@ -16,6 +17,8 @@ namespace CompiPascalC3D.Analizador
         LinkedList<Instruccion> instrucciones_globales = new LinkedList<Instruccion>();
         LinkedList<Instruccion> funciones = new LinkedList<Instruccion>();
         LinkedList<Instruccion> fuertesDeclaraciones = new LinkedList<Instruccion>();
+        public string grafo = "";
+        private int contador = 0;
 
         public CGramatica()
         {
@@ -50,7 +53,8 @@ namespace CompiPascalC3D.Analizador
             {
                 //mandamos a llamar a los metodos de instrucciones
                 //Maestro.Instance.addMessage("Todo correcto");
-                
+                _ = this.generarImagen(raiz_grogram);
+
                 this.evaluarInstrucciones(raiz_grogram.ChildNodes[0]);
 
                 TSimbolo global = new TSimbolo(null);
@@ -128,6 +132,34 @@ namespace CompiPascalC3D.Analizador
 
         }
 
+
+        private void getDot(ParseTreeNode raiz)
+        {
+            grafo = "digraph G {";
+            grafo += "nodo0[label=\"" + raiz.ToString() + "\"];\n";
+            contador = 1;
+            recorrerAST("nodo0", raiz);
+            grafo += "}";
+        }
+
+        private void recorrerAST(String padre, ParseTreeNode hijos)
+        {
+            foreach (ParseTreeNode hijo in hijos.ChildNodes)
+            {
+                string nombreHijo = "nodo" + contador.ToString();
+                grafo += nombreHijo + "[label=\"" + hijo.ToString() + "\"];\n";
+                grafo += padre + "->" + nombreHijo + ";\n";
+                contador++;
+                recorrerAST(nombreHijo, hijo);
+            }
+        }
+
+        public async Task generarImagen(ParseTreeNode raiz)
+        {
+            this.getDot(raiz);
+            await File.WriteAllTextAsync("C:\\compiladores2\\AST.txt", this.grafo);
+
+        }
 
 
         public void evaluarInstrucciones(ParseTreeNode ps)
@@ -637,7 +669,7 @@ namespace CompiPascalC3D.Analizador
         public Instruccion evalAsigArreglo(ParseTreeNode ps)
         {
 
-            return new AsignacionArreglo(ps.ChildNodes[0].Token.ValueString, paramsArreglo(ps.ChildNodes[1]), evalOpr(ps.ChildNodes[3]));
+            return new AsignacionArreglo(ps.ChildNodes[0].Token.ValueString, paramsArreglo(ps.ChildNodes[1]), evalOpr(ps.ChildNodes[4]));
 
             //return null;
         }

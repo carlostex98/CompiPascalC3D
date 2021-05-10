@@ -25,6 +25,7 @@ namespace CompiPascalC3D.Instrucciones
             if (ts.etiquetaBreak == -1)
             {
                 //error
+                throw new Error(linea, columna, "Break fuera de contexto", Error.Tipo_error.SEMANTICO);
             }
             Tres.Instance.agregarComentario("etiqueta break");
             Tres.Instance.agregarLinea($"goto L{ts.etiquetaBreak};");

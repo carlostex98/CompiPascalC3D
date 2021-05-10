@@ -18,3 +18,4 @@ C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3
 C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.reporteSimbolos.resources
 C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.Errores.resources
 C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.grafica_ts.resources
+C:\Users\carlo\source\repos\CompiPascalC3D\obj\Debug\netcoreapp3.1\CompiPascalC3D.Optimizaciones.resources

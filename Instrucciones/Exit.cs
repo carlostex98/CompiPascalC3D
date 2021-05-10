@@ -23,6 +23,12 @@ namespace CompiPascalC3D.Instrucciones
 
         public Object ejecutar(TSimbolo ts)
         {
+
+            if (ts.estructura == 0)
+            {
+                throw new Error(linea, columna, "Exit fuera de contexto", Error.Tipo_error.SEMANTICO);
+            }
+
             Tres.Instance.agregarComentario("inicio exit");
             Primitivo e = (Primitivo)this.op.ejecutar(ts);
             //luego de calcular el valor es necesario asignar a la posicion numero
